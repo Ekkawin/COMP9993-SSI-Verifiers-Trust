@@ -1,13 +1,13 @@
 {
     "_comment": "Make sure to replace following private keys with keys from your Ganache instance",
     "acc0": {
-        "pvtKey": "0x9df8ef4a36885f6a7e6c073234bd19a7564782d40c6646d7ab8f168eabbc3a75"
+        "pvtKey": "0x29b3bd36a55ed482a15462fe2cf068399d1fb99b4c6f189b80d6b9b86bc3f83e"
     },
     "acc1": {
-        "pvtKey": "0xe24efe7b0472ce541e013e566ff1749c1f8b9d528928b7f869c4e4185ee27e68"
+        "pvtKey": "0x8fc2b0dae235209e067e76603eaefb980afa243f826c2f9062965bb1e2a2c361"
     },
     "acc2": {
-        "pvtKey": "0xe033c58d8ecd329d7c9e30ae0bee466533f607cc759965ee6fb8c04f769d63b6"
+        "pvtKey": "0xf2282129a47a0620528df8c180bae0566d2692b4badc9a95ebea4978f1b7d5c7"
     },
     "acc3": {
         "pvtKey": "0xdb1def2f846e7272be89694df399eadc38bc07578db76bb8258337ff61fd39be"

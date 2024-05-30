@@ -50,8 +50,8 @@ const initProvider = () => {
         const providerData = fs.readFileSync('eth_providers/providers.json', 'utf8');
         const providerJson = JSON.parse(providerData);
         //Enable one of the next 2 lines depending on Ganache CLI or GUI
-        // const providerLink = providerJson['provider_link_ui']
-        const providerLink = providerJson['provider_link_cli'];
+        const providerLink = providerJson['provider_link_ui'];
+        // const providerLink = providerJson['provider_link_cli']
         return new Web3.providers.WebsocketProvider(providerLink);
     }
     catch (error) {

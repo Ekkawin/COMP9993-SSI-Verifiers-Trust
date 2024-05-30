@@ -61,7 +61,7 @@ const compileSols = (names) => {
                     '*': ['*']
                 }
             },
-            // evmVersion: 'berlin' //Uncomment this line if using Ganache GUI
+            evmVersion: 'berlin' //Uncomment this line if using Ganache GUI
         }
     };
     // Compile all contracts
