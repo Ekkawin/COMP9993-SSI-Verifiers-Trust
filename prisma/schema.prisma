@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Node {
+  id        String  @id
+  name      String?
+  type      String
+  srcGraphs Graph[] @relation("src")
+  desGraphs Graph[] @relation("des")
+}
+
+model Graph {
+  weight     Int
+  src        Node   @relation("src", fields: [srcAddress], references: [id])
+  des        Node   @relation("des", fields: [desAddress], references: [id])
+  srcAddress String
+  desAddress String
+
+  @@id([srcAddress, desAddress])
+}
