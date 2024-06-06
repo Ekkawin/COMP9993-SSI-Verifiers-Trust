@@ -1,0 +1,113 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "_issuers",
+		"outputs": [
+			{
+				"internalType": "contract Issuer",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "_verifiers",
+		"outputs": [
+			{
+				"internalType": "contract Verifier",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "src",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "des",
+				"type": "address"
+			},
+			{
+				"internalType": "uint32",
+				"name": "weight",
+				"type": "uint32"
+			}
+		],
+		"name": "addIssuerEdge",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "src",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "des",
+				"type": "address"
+			},
+			{
+				"internalType": "uint32",
+				"name": "weight",
+				"type": "uint32"
+			}
+		],
+		"name": "addVerifierEdge",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "createIssuer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "createVerifier",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getIssuer",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
