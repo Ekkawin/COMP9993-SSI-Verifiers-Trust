@@ -22,7 +22,7 @@ contract Factory{
     }
 
     function getIssuer() public view returns (address) {
-        return address(_issuers[0]);
+        return address(_issuers[_issuers.length -1]);
     }
 
 
@@ -36,6 +36,10 @@ contract Factory{
         Verifier(src).addVertex(des);
         Verifier(src).addEdge(weight);
         
+    }
+
+    function getVerifier() public view returns (address) {
+        return address(_verifiers[_verifiers.length-1]);
     }
 
 }
