@@ -19,6 +19,7 @@
     "web3": "^4.0.2"
   },
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "start-db": "docker-compose up -d"
   }
 }
