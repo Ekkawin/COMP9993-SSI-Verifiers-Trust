@@ -27,3 +27,7 @@ model Graph {
 
   @@id([srcAddress, desAddress])
 }
+
+model Factory {
+  address String @id
+}
