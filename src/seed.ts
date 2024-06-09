@@ -46,7 +46,6 @@ try {
 
 const generateIssuer = async () => {
   const factoryAddress = await prisma.factory.findFirst();
-  //   console.log("fact affr", factoryAddress);
 
   const factoryContract = new web3.eth.Contract(
     FactoryAbi,
@@ -66,7 +65,7 @@ const generateIssuer = async () => {
     gas: GasHelper.gasPay(gasLimit),
   });
   const issuerAddress = await factoryContract.methods.getIssuer().call();
-  console.log("Issuer Address", issuerAddress);
+  console.log("Create Issuer with Address", issuerAddress);
 
   await prisma.node.create({
     data: {
@@ -74,6 +73,9 @@ const generateIssuer = async () => {
       type: "I",
     },
   });
+
+  console.log("Save Issuer to Database");
+  
 };
 
 const generateVerifier = async () => {
@@ -98,7 +100,7 @@ const generateVerifier = async () => {
     gas: GasHelper.gasPay(gasLimit),
   });
   const verifierAddress = await factoryContract.methods.getVerifier().call();
-  console.log("Verifier Address", verifierAddress);
+  console.log("Create Verifier with Address", verifierAddress);
 
   await prisma.node.create({
     data: {
@@ -106,6 +108,8 @@ const generateVerifier = async () => {
       type: "V",
     },
   });
+
+  console.log("Save Verifier to Database");
 };
 
 async function main() {

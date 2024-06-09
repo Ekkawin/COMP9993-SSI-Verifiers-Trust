@@ -68,11 +68,16 @@ const deployFactory = async () => {
 
 async function main() {
   const address = await deployFactory();
+  console.log("Deploy Factory Smart Contract with Address", address);
+
   await prisma.factory.create({
     data: {
       address,
     },
   });
+  
+  console.log("Add Factory Contract to Database");
 }
+
 
 main();

@@ -19,7 +19,8 @@
     "web3": "^4.0.2"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "prisma db push && ts-node src/index.ts",
+    "seed": "ts-node src/seed.ts",
     "start-db": "docker-compose up -d"
   }
 }
