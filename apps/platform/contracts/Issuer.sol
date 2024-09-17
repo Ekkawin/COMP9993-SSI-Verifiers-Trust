@@ -24,6 +24,15 @@ contract Issuer{
         return vertices[0];
     }
 
+    function getAddr() public view returns (address){
+        address addr = address(bytes20(keccak256(abi.encodePacked(block.timestamp))));
+        return addr;
+    }
+
+    function hash(string memory data) public pure returns (bytes32) {
+    return keccak256(abi.encode(data));
+}
+
      modifier onlyOwner {
         require(msg.sender == owner);
         _;

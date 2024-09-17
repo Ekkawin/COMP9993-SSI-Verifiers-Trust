@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 import seed from "./seed.json";
 import FactoryAbi from "./FactoryAbi.json";
 import { GasHelper } from "./util";
@@ -13,7 +13,7 @@ import type { Web3BaseProvider, AbiStruct } from "web3-types";
 let fs = require("fs");
 const path = require("path");
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 const initProvider = (): Web3BaseProvider => {
   try {
@@ -53,11 +53,11 @@ const deployFactory = async () => {
   // Get current average gas price
   const gasPrice = await web3.eth.getGasPrice(ETH_DATA_FORMAT);
   const gasLimit = await factoryContract.estimateGas(
-    { from: "0x2dfA509be001a7aA075558131BEA3D8AB83E7B34" },
+    { from: "0x48F9f9b84Fb2758858a9957F9d97a3284BE4b11b" },
     DEFAULT_RETURN_FORMAT // the returned data will be formatted as a bigint
   );
   const tx = await factoryContract.send({
-    from: "0x2dfA509be001a7aA075558131BEA3D8AB83E7B34",
+    from: "0x48F9f9b84Fb2758858a9957F9d97a3284BE4b11b",
     gasPrice,
     gas: GasHelper.gasPay(gasLimit),
   });
@@ -70,11 +70,11 @@ async function main() {
   const address = await deployFactory();
   console.log("Deploy Factory Smart Contract with Address", address);
 
-  await prisma.factory.create({
-    data: {
-      address,
-    },
-  });
+  // await prisma.factory.create({
+  //   data: {
+  //     address,
+  //   },
+  // });
   
   console.log("Add Factory Contract to Database");
 }
