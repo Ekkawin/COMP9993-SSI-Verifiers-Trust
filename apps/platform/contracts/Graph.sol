@@ -2,45 +2,69 @@
 
 pragma solidity ^0.8.0;
 
-contract Graph{
+import "./VerifierRegistry.sol";
 
-mapping(address => address[]) public graph;
+contract Graph {
+    enum ContractType {
+        Holder,
+        Verifier,
+        TrustAnchor
+    }
 
-// constructor(){
-//     }
+    mapping(address => address[]) public graph;
+    address public owner;
+    address private verifierRegistryAddress;
+    ContractType private contractType;
 
-event LogGraph(address, address);
+    constructor() {
+        owner = msg.sender;
+    }
 
+    event LogGraph(address, address, address);
 
-  function addEdge(address des) public {
-    //  .
-    //  .  #do something
-    //  .
-    //   unit256 key = “key example”
-    //   unit256 confirmkey =   Verifier.confirmSigningKey(
-    //                                                  encryptwithpubkey(key))
+    function addEdge(address src, address des) public {
+        ContractType srcContractType = mapContractType(
+            VerifierRegistry(verifierRegistryAddress).getContractType(src)
+        );
+        ContractType desContractType = mapContractType(
+            VerifierRegistry(verifierRegistryAddress).getContractType(des)
+        );
 
-    //  if (key === confirmkey) {
-      graph[des].push(msg.sender);
-    //      }
-    // string memory a = string(abi.encodePacked(des));
-      emit LogGraph(des, msg.sender);
-     
-   }
-   function getEdge(address src) public returns (address) {
-    //  .
-    //  .  #do something
-    //  .
-    //   unit256 key = “key example”
-    //   unit256 confirmkey =   Verifier.confirmSigningKey(
-    //                                                  encryptwithpubkey(key))
+        require(desContractType != ContractType.Holder);
+        require(srcContractType != ContractType.TrustAnchor);
+        require(
+            !(srcContractType == ContractType.Verifier &&
+                desContractType == ContractType.Holder)
+        );
 
-    //  if (key === confirmkey) {
-      
-    //      }
-    // string memory a = string(abi.encodePacked(des));
-      emit LogGraph(src, msg.sender);
-      return (graph[src][0]);
-     
-   }
+        if (desContractType == ContractType.Verifier) {
+            address contractOwner = VerifierRegistry(verifierRegistryAddress)
+                .getContractOwner(src);
+            assert(contractOwner != msg.sender);
+        }
+
+        graph[des].push(src);
+        emit LogGraph(des, src, msg.sender);
+    }
+
+    function getEdges(address src) public view returns (address[] memory) {
+        return (graph[src]);
+    }
+
+    function mapContractType(uint u) private pure returns (ContractType) {
+        if (u == 0) return ContractType.Holder;
+        if (u == 1) return ContractType.Verifier;
+        if (u == 2) return ContractType.TrustAnchor;
+
+        return ContractType.Holder;
+    }
+
+    function addVerifierRegisterAddress(address a) public onlyOwner {
+        verifierRegistryAddress = a;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
 }
