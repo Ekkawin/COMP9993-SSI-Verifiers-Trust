@@ -1,57 +1,68 @@
-"use strict";
 /// SPDX-License-Identifier: UNLICENSED
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.compileSols = exports.writeOutput = void 0;
+
 /// @title Compile contracts
 /// @author Dilum Bandara, CSIRO's Data61
-const fs = require('fs');
-const fsExtra = require('fs-extra');
-const path = require('path');
-const solc = require('solc');
+
+const fs = require('fs')
+const fsExtra = require('fs-extra')
+const path = require('path')
+const solc = require('solc')
+
 /**
  * Find files to import
  * @param {string} path Path to import
  * @returns {any} Contract code as an object
  */
-const findImports = (path) => {
+const findImports = (path: string): any => {
     try {
         return {
             contents: fs.readFileSync(`node_modules/${path}`, 'utf8')
-        };
-    }
-    catch (e) {
+        }
+    } catch (e: any) {
         return {
             error: e.message
-        };
+        }
     }
-};
+}
+
 /**
  * Writes contracts from the compiled sources into JSON files
  * @param {any} compiled Object containing the compiled contracts
  * @param {string} buildPath Path of the build folder
  */
-const writeOutput = (compiled, buildPath) => {
-    fsExtra.ensureDirSync(buildPath); // Make sure directory exists
+export const writeOutput = (compiled: any, buildPath: string) => {
+    fsExtra.ensureDirSync(buildPath)    // Make sure directory exists
+
     for (let contractFileName in compiled.contracts) {
-        const contractName = contractFileName.replace('.sol', '');
-        console.log('Writing: ', contractName + '.json to ' + buildPath);
-        fsExtra.outputJsonSync(path.resolve(buildPath, contractName + '.json'), compiled.contracts);
+        const contractName = contractFileName.replace('.sol', '')
+        console.log('Writing: ', contractName + '.json to ' + buildPath)
+        fsExtra.outputJsonSync(
+            path.resolve(buildPath, contractName + '.json'),
+            compiled.contracts
+        )
     }
-};
-exports.writeOutput = writeOutput;
+}
+
 /**
  * Compile Solidity contracts
  * @param {Array<string>} names List of contract names
  * @return An object with compiled contracts
  */
-const compileSols = (names) => {
-    let sources = {};
-    names.forEach((value, index, array) => {
-        let file = fs.readFileSync(`contracts/${value}.sol`, 'utf8');
+export const compileSols = (names: string[]): any => {
+    // Collection of Solidity source files
+    interface SolSourceCollection {
+        [key: string]: any
+    }
+
+    let sources: SolSourceCollection = {}
+
+    names.forEach((value: string, index: number, array: string[]) => {
+        let file = fs.readFileSync(`contracts/${value}.sol`, 'utf8')
         sources[value] = {
             content: file
-        };
-    });
+        }
+    })
+
     let input = {
         language: 'Solidity',
         sources,
@@ -63,13 +74,12 @@ const compileSols = (names) => {
             },
             evmVersion: 'berlin' //Uncomment this line if using Ganache GUI
         }
-    };
+    }
+
     // Compile all contracts
     try {
-        return JSON.parse(solc.compile(JSON.stringify(input), { import: findImports }));
-    }
-    catch (error) {
+        return JSON.parse(solc.compile(JSON.stringify(input), { import: findImports }))
+    } catch (error) {
         console.log(error);
     }
-};
-exports.compileSols = compileSols;
+}
