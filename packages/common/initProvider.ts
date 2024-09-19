@@ -1,10 +1,10 @@
-const {
+import {
   Web3
-} = require("web3");
+} from "web3";
 import type { Web3BaseProvider, AbiStruct } from "web3-types";
-let fs = require("fs");
+import fs from "fs";
 
-const initProvider = (): Web3BaseProvider => {
+export const initProvider = (): Web3BaseProvider => {
     try {
       const providerData = fs.readFileSync(
         "eth_providers/providers.json",

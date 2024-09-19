@@ -1,25 +1,12 @@
-import { GasHelper } from "./util";
-const {
-  Web3,
-  ETH_DATA_FORMAT,
-  DEFAULT_RETURN_FORMAT,
-  Contract,
-} = require("web3");
+import { deployContract, getAccount, initProvider } from "common";
+import {
+  Web3
+} from "web3";
 import type { Web3BaseProvider, AbiStruct } from "web3-types";
-import { compileSols, writeOutput } from "./solc-lib";
-import { log } from "console";
-import { deployContract, getAccount, initProvider } from "./helper";
-let fs = require("fs");
-const path = require("path");
-// import initProvider from '@common'
-
-// const prisma = new PrismaClient();
-
-
 
 async function main() {
   let web3Provider: Web3BaseProvider;
-  let web3: typeof Web3;
+  let web3: Web3;
 
   try {
     web3Provider = initProvider()

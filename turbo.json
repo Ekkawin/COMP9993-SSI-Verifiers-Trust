@@ -1,0 +1,43 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": ["**/.env.*local"],
+	"globalEnv": [
+		"NODE_ENV",
+		"VITE_API_URL",
+		"VITE_ENABLE_FAST_SIGNING",
+		"VITE_WALLET_ADDRESS",
+		"VITE_WALLET_PUBLIC_KEY",
+		"VITE_WALLET_PRIVATE_KEY",
+		"VITE_ACTIVE_CHAIN"
+	],
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": [".next/**", "!.next/cache/**", "build/**"]
+		},
+		"lint": {
+			"dependsOn": ["^lint"]
+		},
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"dev2": {
+			"cache": false,
+			"persistent": true
+		},
+        "dev:verifier": {
+            "dependsOn": ["dev:trustanchor"],
+			"cache": false,
+			"persistent": true
+		},
+        "dev:trustanchor": {
+			"cache": false,
+			"persistent": true
+		},
+		"test": {
+			"cache": true,
+			"dependsOn": ["build"]
+		}
+	}
+}

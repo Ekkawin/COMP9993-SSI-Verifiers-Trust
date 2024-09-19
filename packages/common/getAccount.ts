@@ -1,10 +1,10 @@
-const {
+import {
   Web3,
-} = require("web3");
-let fs = require("fs");
-const path = require("path");
+} from "web3";
+import fs from "fs";
 
-export const getAccount = (web3: typeof Web3, name: string) => {
+
+export const getAccount = (web3: Web3, name: string) => {
     try {
       const accountData = fs.readFileSync("eth_accounts/accounts.json", "utf8");
       const accountJson = JSON.parse(accountData);

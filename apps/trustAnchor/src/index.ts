@@ -1,8 +1,8 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const port = 3000;
+const port = 3001;
 
-const { Web3, ETH_DATA_FORMAT, DEFAULT_RETURN_FORMAT } = require("web3");
+import { Web3, ETH_DATA_FORMAT, DEFAULT_RETURN_FORMAT } from "web3";
 import {  Web3BaseProvider } from "web3-types";
 
 import {
@@ -12,7 +12,6 @@ import {
   initProvider,
 } from "./helper";
 import { compileSols, writeOutput } from "./solc-lib";
-import { log } from "console";
 import { GasHelper } from "./util";
 let fs = require("fs");
 const path = require("path");
@@ -28,7 +27,7 @@ app.listen(port, async () => {
   console.log("ver regis addr", address);
 
   let web3Provider: Web3BaseProvider;
-  let web3: typeof Web3;
+  let web3: Web3;
 
   try {
     web3Provider = initProvider();

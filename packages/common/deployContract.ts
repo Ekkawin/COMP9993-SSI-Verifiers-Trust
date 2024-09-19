@@ -1,10 +1,10 @@
 import { GasHelper } from "./util";
-const {
+import {
   ETH_DATA_FORMAT,
   DEFAULT_RETURN_FORMAT,
-} = require("web3");
+} from "web3";
 import { compileSols, writeOutput } from "./solc-lib";
-const path = require("path");
+import path from "path";
 
 export const deployContract = async (
     contractName: string,
