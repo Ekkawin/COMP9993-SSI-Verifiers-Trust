@@ -1,3 +1,5 @@
 export * from './deployContract'
 export * from './initProvider'
 export * from './getAccount'
+export * from './getContract'
+export * from './const'

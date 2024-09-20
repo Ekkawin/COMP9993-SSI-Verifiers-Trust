@@ -21,18 +21,15 @@ async function main() {
 
   
   const graphAddress = await deployContract("Graph", from, web3);
-  console.log("Deploy Graph Smart Contract with Address", graphAddress);
+  const verifierRegistryAddress = await deployContract("VerifierRegistry", from, web3);
+  const issuerRegistryAddress = await deployContract("IssuerRegistry", from, web3);
 
-  const verifierAddress = await deployContract("VerifierRegistry", from, web3);
-  console.log("Deploy Verifier Registry Smart Contract with Address", verifierAddress);
 
-  // await prisma.factory.create({
-  //   data: {
-  //     address,
-  //   },
-  // });
+  console.log("\n\nGRAPH CONTRACT ADDRESS:  ", graphAddress);
+  console.log("VERIFIERREGISTRY CONTRACT ADDRESS", verifierRegistryAddress);
+  console.log("ISSUERREGISTRY CONTRACT ADDRESS", issuerRegistryAddress, "\n\n");
 
-  console.log("Add Factory Contract to Database");
+
 }
 
 main();

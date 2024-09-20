@@ -109,8 +109,11 @@ importers:
       '@prisma/client':
         specifier: 5.14.0
         version: 5.14.0(prisma@5.19.1)
+      '@types/express':
+        specifier: ^4.17.21
+        version: 4.17.21
       axios:
-        specifier: ^1.4.0
+        specifier: ^1.7.7
         version: 1.7.7
       common:
         specifier: workspace:*

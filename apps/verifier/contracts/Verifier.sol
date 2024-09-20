@@ -3,33 +3,25 @@
 pragma solidity ^0.8.0;
 
 contract Verifier {
-    mapping(address => address) public owners;
-    mapping(address => uint) public contractType;
     address public owner;
-    // address[] public verifierAddresses;
+    
+    event Verify(address, string, string);
+    event VerifyViaTA(address, address);
 
     constructor() {
         owner = msg.sender;
     }
 
-    function registerContract(
-        address contractAddress,
-        uint _contractType
-    ) external {
-        // TODO: check to existence of the contract address
-        owners[contractAddress] = msg.sender;
-        contractType[contractAddress] = _contractType;
+    function verify(address src, string memory status, string memory message) external onlyOwner {
+        emit Verify(src, status, message);
     }
 
-    function getOwner(address v) external view returns (address) {
-        return owners[v];
+    function verifyViaTa(address src, address ta) external onlyOwner {
+        emit VerifyViaTA(src, ta);
     }
 
-    function getContractType(address a) external view returns (uint) {
-        return contractType[a];
-    }
-
-    function getContractOwner(address a) external view returns (address) {
-        return owners[a];
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
     }
 }
