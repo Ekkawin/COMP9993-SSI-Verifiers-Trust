@@ -63,14 +63,36 @@ app.post("/verifier/verify", async (req: any, res: any) => {
   res.sendStatus(200);
 });
 
-app.post("/verifier/trustanchor:address", async (req: any, res: any) => {
-  const _trustAnchorAddress = req.params.address;
+app.post("/verifier/trustanchor/:address", async (req: any, res: any) => {
+  const _trustAnchorAddress = req.params?.address;
+  if (!_trustAnchorAddress) {
+    res.status(400);
+    req.send({ message: "Require trust anchor address" });
+  }
   console.log("trustAnchorAddress", _trustAnchorAddress);
 
-  const request = await axios.post(TrustAnchorURL.TRUSTANCHORA);
-  console.log(request);
+  const request = await axios.post(
+    TrustAnchorURL.TRUSTANCHORA,
+    {
+      verifierAddress,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  // console.log(request,"hi\n")
+  const message = request?.data?.message;
+  // console.log(message)
+  res.send(message);
+  // res.sendStatus(200);
+});
 
-  res.sendStatus(200);
+app.post("/receiveResult/:id", async (req: any, res: any) => {
+  const id = req.params?.id;
+  const message = id;
+  res.send(message);
 });
 
 app.listen(port, async () => {
@@ -84,6 +106,46 @@ app.listen(port, async () => {
 
   verifierAddress = await deployContract("Verifier", from, web3);
   console.log("Deploy Verifier with Address", verifierAddress);
+
+  interface Option {
+    readonly address?: string | string[] | undefined;
+    readonly topics?: string[] | undefined;
+  }
+
+  const optionsVerify: Option = {
+    address: verifierAddress,
+    topics: [web3.utils.sha3("Verify(address, string, string)")] as string[],
+  };
+  const jsonInterfaceVerify = [
+    {
+      type: "address",
+      name: "callerAddress",
+    },
+    {
+      type: "string",
+      name: "status",
+    },
+    {
+      type: "string",
+      name: "message",
+    },
+  ];
+
+  const subscriptionVerify = await web3.eth.subscribe(
+    "logs",
+    optionsVerify
+  );
+  subscriptionVerify.on("data", async (event: any) => {
+    const eventData = web3.eth.abi.decodeLog(
+      jsonInterfaceVerify,
+      event.data,
+      event.topics
+    );
+    console.log(`Event Verify ${eventData.address}`);
+  });
+  subscriptionVerify.on("error", async (error: any) =>
+    console.log("Error listening on event: ", error)
+  );
 
   const verifierRegistryContract = getContract(
     "VerifierRegistry",

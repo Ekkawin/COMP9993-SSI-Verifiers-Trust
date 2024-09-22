@@ -3,7 +3,7 @@ export enum TrustAnchor {
 }
 
 export enum TrustAnchorURL {
-    TRUSTANCHORA = "https://localhost:3001/verify/"
+    TRUSTANCHORA = "http://localhost:3001/verify-request"
 }
 
 

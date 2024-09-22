@@ -16,6 +16,7 @@
   "dependencies": {
     "@prisma/client": "5.14.0",
     "axios": "^1.4.0",
+    "body-parser": "^1.20.3",
     "common": "workspace:*",
     "express": "^4.21.0",
     "fs-extra": "^11.1.1",

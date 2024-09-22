@@ -2,35 +2,60 @@ import express from "express";
 import { Web3, ETH_DATA_FORMAT, DEFAULT_RETURN_FORMAT } from "web3";
 import { Web3BaseProvider } from "web3-types";
 import { GasHelper } from "./util";
-import { deployContract, getAccount, getContract, initProvider, nullAddress } from "common";
+import {
+  deployContract,
+  getAccount,
+  getContract,
+  initProvider,
+  nullAddress,
+} from "common";
 import { verifySignature } from "../services";
+// import bodyParser from 'body-parser' 
+const bodyParser = require('body-parser')
 
 const app = express();
 const port = 3001;
 
+app.use(bodyParser.json()) // handle json data
+  
+
 let issuerRegisterAddress: string;
 let trustanchorAddress: string;
 let web3Provider: Web3BaseProvider;
-  let web3: Web3;
+let web3: Web3;
 
-  try {
-    web3Provider = initProvider();
-    web3 = new Web3(web3Provider);
-  } catch (error) {
-    console.error(error);
-    throw "Web3 cannot be initialised.";
-  }
-  getAccount(web3, "acc0");
-  const from = web3.eth.accounts.wallet[0].address;
+let requestors:any ={}
 
+try {
+  web3Provider = initProvider();
+  web3 = new Web3(web3Provider);
+} catch (error) {
+  console.error(error);
+  throw "Web3 cannot be initialised.";
+}
+getAccount(web3, "acc0");
+const from = web3.eth.accounts.wallet[0].address;
 
-  app.post("/verify-request", async(req: any, res: any) => {})
+app.post("/verify-request", async (req: any, res: any) => {
 
-app.post("/verify", async(req: any, res: any) => {
+  // console.log("hi")
+  const id = (Math.random() * 1000).toFixed(0).toString()
+  const verifierAddress  = req.body?.verifierAddress
+  requestors = {...requestors,  [id]:verifierAddress}
+
+  
+  res.send({message: `Your tracsaction is ${id}` })
+  
+});
+
+app.post("/verify/:id", async (req: any, res: any) => {
+  const id = req.params?.id as string
   const data = req.body;
   const issuerAddress = data?.issuerAddress;
   const issuerSignature = data?.issuerSignature;
   const holderWallet = data?.holderWallet;
+  const verifierAddress = requestors[id] 
+  
 
   const result = await verifySignature({
     issuerRegistryAddress: issuerRegisterAddress,
@@ -39,11 +64,15 @@ app.post("/verify", async(req: any, res: any) => {
   });
 
   // Emit result
-  const trustAnchorContract = getContract("TrustAnchor", trustanchorAddress, web3);
+  const trustAnchorContract = getContract(
+    "TrustAnchor",
+    trustanchorAddress,
+    web3
+  );
 
   const contract = trustAnchorContract.methods.verify(
     holderWallet || nullAddress,
-    nullAddress,
+    verifierAddress || nullAddress,
     "200",
     ""
   );
@@ -58,7 +87,6 @@ app.post("/verify", async(req: any, res: any) => {
   });
 
   res.sendStatus(200);
-  
 });
 
 app.listen(port, async () => {
@@ -71,7 +99,53 @@ app.listen(port, async () => {
   issuerRegisterAddress = issReAddr;
 
   trustanchorAddress = await deployContract("TrustAnchor", from, web3);
-  console.log("Deploy Verifier with Address", trustanchorAddress);
+  console.log("Deploy Trust Anchor with Address", trustanchorAddress);
+
+
+  interface Option {
+    readonly address?: string | string[] | undefined;
+    readonly topics?: string[] | undefined;
+  }
+
+  const optionsTAVerify: Option = {
+    address: trustanchorAddress,
+    topics: [web3.utils.sha3('TAVerify(address,address,string,string)')] as string[],
+  };
+  const jsonInterfaceTAVerify = [
+    {
+      type: "address",
+      name: "callerAddress",
+    },
+    {
+      type: "address",
+      name: "verifierAddress",
+    },
+    {
+      type: "string",
+      name: "status",
+    },
+    {
+      type: "string",
+      name: "message",
+    },
+  ];
+
+  const subscriptionTAVerify = await web3.eth.subscribe(
+    "logs",
+    optionsTAVerify
+  );
+  subscriptionTAVerify.on("data", async (event: any) => {
+    const eventData = web3.eth.abi.decodeLog(
+      jsonInterfaceTAVerify,
+      event.data,
+      event.topics
+    );
+    console.log(`Event TAVerify Caller Address: ${eventData.callerAddress}, Verifier Address: ${eventData.verifierAddress}, Status: ${eventData.status}, Message: ${eventData.message}`);
+  });
+  subscriptionTAVerify.on("error", async (error: any) =>
+    console.log("Error listening on event: ", error)
+  );
+
 
   const verifierRegistryContract = getContract(
     "VerifierRegistry",
