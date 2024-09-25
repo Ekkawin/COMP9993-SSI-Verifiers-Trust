@@ -11,10 +11,11 @@ export const deployContract = async (
     from: string,
     web3: any
   ) => {
-    console.log("hi");
+    
     console.log(from);
-    const buildPath = path.resolve(__dirname, "");
+    const buildPath = path.resolve(__dirname, "../contracts");
     let compiledContract: any;
+    console.log("buildPath", buildPath)
     try {
       compiledContract = compileSols([contractName]);
       writeOutput(compiledContract, buildPath);

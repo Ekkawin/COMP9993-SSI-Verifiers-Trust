@@ -2,20 +2,18 @@
 /// @title Compile contracts
 /// @author Dilum Bandara, CSIRO's Data61
 
-const fs = require('fs')
-const fsExtra = require('fs-extra')
-const path = require('path')
+import * as fs from 'fs';
+import * as fsExtra from 'fs-extra';
+import path from 'path';
 const solc = require('solc')
 
-/**
- * Find files to import
- * @param {string} path Path to import
- * @returns {any} Contract code as an object
- */
-const findImports = (path: string): any => {
+
+const findImports = (_path: string): any => {
     try {
+        const buildPath = path.resolve(__dirname, "../contracts");
         return {
-            contents: fs.readFileSync(`contracts/${path}`, 'utf8')
+            
+            contents: fs.readFileSync(`${buildPath}/${_path}`, 'utf8')
         }
     } catch (e: any) {
         return {
@@ -56,7 +54,9 @@ export const compileSols = (names: string[]): any => {
     let sources: SolSourceCollection = {}
 
     names.forEach((value: string, index: number, array: string[]) => {
-        let file = fs.readFileSync(`contracts/${value}.sol`, 'utf8')
+        const buildPath = path.resolve(__dirname, "../contracts");
+        let file = fs.readFileSync(`${buildPath}/${value}.sol`, 'utf8')
+        // console.log("file", file)
         sources[value] = {
             content: file
         }

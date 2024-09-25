@@ -27,7 +27,7 @@
     "web3-types": "^1.8.0"
   },
   "scripts": {
-    "dev:issuer": "ts-node src/index.ts",
+    "dev:issuer": "tsnd --respawn src/index.ts",
     "dev2": "tsnd --respawn src/index.ts"
   }
 }

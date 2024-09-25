@@ -14,6 +14,7 @@
     "dev-individual": "turbo run dev:verifier --parallel",
     "dev2": "turbo run dev2 ",
     "dev:verifier": "turbo run dev:verifier",
-    "dev:trustanchor": "turbo run dev:trustanchor"
+    "dev:trustanchor": "turbo run dev:trustanchor",
+    "dev:issuer": "turbo run dev:issuer"
   }
 }
