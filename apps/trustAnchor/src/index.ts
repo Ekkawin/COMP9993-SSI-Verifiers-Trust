@@ -10,9 +10,8 @@ import {
   nullAddress,
 } from "common";
 import { verifyContext, verifySignature } from "../services";
-const bodyParser = require('body-parser')
+import * as bodyParser from 'body-parser'
 import * as fs from 'fs'
-import crypto from 'crypto'
 
 const app = express();
 const port = 3001;
@@ -88,11 +87,11 @@ app.post("/verify/:id", async (req: any, res: any) => {
   const gasPrice = await web3.eth.getGasPrice(ETH_DATA_FORMAT);
   const gasLimit = await contract.estimateGas({ from }, DEFAULT_RETURN_FORMAT);
 
-  // const tx = await contract.send({
-  //   from,
-  //   gasPrice,
-  //   gas: GasHelper.gasPay(gasLimit),
-  // });
+  const tx = await contract.send({
+    from,
+    gasPrice,
+    gas: GasHelper.gasPay(gasLimit),
+  });
 
   res.sendStatus(200);
 });
