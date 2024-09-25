@@ -8,19 +8,20 @@
     "@types/node": "^20.14.1",
     "prisma": "^5.14.0",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "@prisma/client": "5.14.0",
     "axios": "^1.4.0",
+    "common": "workspace:*",
     "fs-extra": "^11.1.1",
     "path": "^0.12.7",
     "solc": "^0.8.27",
     "web3": "^4.0.2",
-    "web3-types": "^1.8.0",
-    "common": "workspace:*"
+    "web3-types": "^1.8.0"
   },
   "scripts": {
-    "dev": "ts-node src/index.ts"
+    "dev": "tsnd --respawn src/index.ts"
   }
 }

@@ -27,7 +27,6 @@
 			"persistent": true
 		},
         "dev:verifier": {
-            "dependsOn": ["dev:trustanchor"],
 			"cache": false,
 			"persistent": true
 		},

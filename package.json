@@ -12,6 +12,8 @@
   "scripts": {
     "dev": "turbo run dev --parallel",
     "dev-individual": "turbo run dev:verifier --parallel",
-    "dev2": "turbo run dev2 "
+    "dev2": "turbo run dev2 ",
+    "dev:verifier": "turbo run dev:verifier",
+    "dev:trustanchor": "turbo run dev:trustanchor"
   }
 }
