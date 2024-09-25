@@ -1,2 +1,2 @@
 export * from './verifySignature'
-export * from './verifyContext'
+export * from './const'

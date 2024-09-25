@@ -3,6 +3,7 @@ import {
   Web3
 } from "web3";
 import type { Web3BaseProvider, AbiStruct } from "web3-types";
+import * as fs from 'fs'
 
 async function main() {
   let web3Provider: Web3BaseProvider;
@@ -28,6 +29,10 @@ async function main() {
   console.log("\n\nGRAPH CONTRACT ADDRESS:  ", graphAddress);
   console.log("VERIFIERREGISTRY CONTRACT ADDRESS", verifierRegistryAddress);
   console.log("ISSUERREGISTRY CONTRACT ADDRESS", issuerRegistryAddress, "\n\n");
+
+  const data = verifierRegistryAddress + '\n' + issuerRegistryAddress
+  
+  fs.writeFileSync("../../.dev.txt", data)
 
 
 }

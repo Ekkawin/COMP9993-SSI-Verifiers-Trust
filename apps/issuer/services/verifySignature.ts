@@ -35,7 +35,6 @@ export const verifySignature = async ({
     issuerAddress || nullAddress,
     issuerSignature
   );
-
   const from = web3.eth.accounts.wallet[0].address;
   const result = await contract.call({ from });
 

@@ -9,8 +9,9 @@ import {
   initProvider,
   nullAddress,
 } from "common";
-import { TrustAnchorURL, verifySignature } from "../services";
+import { TrustAnchorURL, verifyContext, verifySignature } from "../services";
 import axios from "axios";
+import * as fs from 'fs'
 
 const app = express();
 app.use(express.json());
@@ -36,11 +37,15 @@ app.post("/verifier/verify", async (req: any, res: any) => {
   const issuerAddress = data?.issuerAddress;
   const issuerSignature = data?.issuerSignature;
   const holderWallet = data?.holderWallet;
+  const key = data?.key;
+
   const result = await verifySignature({
     issuerRegistryAddress: issuerRegisterAddress,
     issuerAddress,
     issuerSignature,
   });
+
+  await verifyContext(key, data?.data)
 
   // Emit result
   const verifierContract = getContract("Verifier", verifierAddress, web3);
@@ -96,10 +101,10 @@ app.post("/receiveResult/:id", async (req: any, res: any) => {
 });
 
 app.listen(port, async () => {
-  const cmdArgs = process.argv.slice(2);
+  const data = fs.readFileSync("../../.dev.txt", 'utf-8')
 
-  const address = cmdArgs[0];
-  const issReAddr = cmdArgs[1];
+  const [address, issReAddr] = data.split("\n")
+
   console.log("ver regis addr", address);
   console.log("ver regis addr", issReAddr);
   issuerRegisterAddress = issReAddr;

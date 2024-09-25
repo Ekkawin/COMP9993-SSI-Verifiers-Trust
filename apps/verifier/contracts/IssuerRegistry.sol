@@ -16,6 +16,11 @@ contract IssuerRegistry{
 
     function verifySignature(address issuer, string memory signature) external view returns (bool) {
         return keccak256(abi.encodePacked((signatures[issuer]))) == keccak256(abi.encodePacked((signature)));
+        
+    }
+
+    function getSignature(address issuer)external view returns (string memory){
+        return signatures[issuer];
     }
 
      modifier onlyOwner {
