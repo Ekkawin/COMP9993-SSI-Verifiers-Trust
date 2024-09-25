@@ -75,9 +75,15 @@ importers:
       axios:
         specifier: ^1.4.0
         version: 1.7.7
+      body-parser:
+        specifier: ^1.20.3
+        version: 1.20.3
       common:
         specifier: workspace:*
         version: link:../../packages/common
+      express:
+        specifier: ^4.21.0
+        version: 4.21.0
       fs-extra:
         specifier: ^11.1.1
         version: 11.2.0
@@ -97,6 +103,12 @@ importers:
       '-':
         specifier: ^0.0.1
         version: 0.0.1
+      '@types/body-parser':
+        specifier: ^1.19.5
+        version: 1.19.5
+      '@types/express':
+        specifier: ^4.17.21
+        version: 4.17.21
       '@types/node':
         specifier: ^20.14.1
         version: 20.16.5
@@ -152,6 +164,9 @@ importers:
       '-':
         specifier: ^0.0.1
         version: 0.0.1
+      '@types/body-parser':
+        specifier: ^1.19.5
+        version: 1.19.5
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
