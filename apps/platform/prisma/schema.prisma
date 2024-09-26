@@ -11,23 +11,18 @@ datasource db {
 }
 
 model Node {
-  id        String  @id
-  name      String?
-  type      String
-  srcGraphs Graph[] @relation("src")
-  desGraphs Graph[] @relation("des")
+  rootAddress String
+  nodeAddress String
+  createdAt   DateTime
+
+  @@id([rootAddress, nodeAddress])
 }
 
-model Graph {
-  weight     Int
-  src        Node   @relation("src", fields: [srcAddress], references: [id])
-  des        Node   @relation("des", fields: [desAddress], references: [id])
-  srcAddress String
-  desAddress String
+model PlatformContractAddress {
+  graphContractAddress    String
+  verifierRegistryAddress String
+  issuerRegistryAddress   String
+  lVerifierAddress        String
 
-  @@id([srcAddress, desAddress])
-}
-
-model Factory {
-  address String @id
+  @@id([graphContractAddress, verifierRegistryAddress, issuerRegistryAddress, lVerifierAddress])
 }

@@ -30,6 +30,7 @@ contract L1VerifierRegistry {
         hash[root] = "";
     }
 
+
     function getHash(address root) public view returns(string memory){
         return hash[root];
     }
