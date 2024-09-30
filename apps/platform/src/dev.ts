@@ -1,8 +1,9 @@
-import { deployContract, getAccount, initProvider } from "common";
-import { Web3 } from "web3";
+import { deployContract, getAccount, getContract, initProvider } from "common";
+import { DEFAULT_RETURN_FORMAT, ETH_DATA_FORMAT, Web3 } from "web3";
 import type { Web3BaseProvider } from "web3-types";
 import { PrismaClient } from "@prisma/client";
-import * as fs from 'fs'
+import * as fs from "fs";
+import { GasHelper } from "./util";
 
 const prisma = new PrismaClient();
 
@@ -38,6 +39,24 @@ async function main() {
     web3
   );
 
+  const _graphContract = getContract("Graph", graphAddress, web3);
+  const graphContract = _graphContract.methods.addVerifierRegisterAddress(
+    verifierRegistryAddress
+  );
+  const gasPrice = await web3.eth.getGasPrice(ETH_DATA_FORMAT);
+  const gasLimit = await graphContract.estimateGas(
+    { from },
+    DEFAULT_RETURN_FORMAT // the returned data will be formatted as a bigint
+  );
+
+  await graphContract.send({
+    from,
+    gasPrice,
+    gas: GasHelper.gasPay(gasLimit),
+  });
+
+  await prisma.platformContractAddress.deleteMany({});
+
   await prisma.platformContractAddress.create({
     data: {
       graphContractAddress: graphAddress,
@@ -50,4 +69,4 @@ async function main() {
 
   fs.writeFileSync("../../.dev.txt", data);
 }
-main()
+main();

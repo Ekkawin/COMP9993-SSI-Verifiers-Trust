@@ -161,7 +161,7 @@ app.listen(port, async () => {
 
   const contract = verifierRegistryContract.methods.registerContract(
     trustanchorAddress,
-    0
+    2
   );
 
   const gasPrice = await web3.eth.getGasPrice(ETH_DATA_FORMAT);

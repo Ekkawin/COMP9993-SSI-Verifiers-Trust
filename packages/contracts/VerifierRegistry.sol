@@ -21,10 +21,6 @@ contract VerifierRegistry {
         contractType[contractAddress] = _contractType;
     }
 
-    function getOwner(address v) external view returns (address) {
-        return owners[v];
-    }
-
     function getContractType(address a) external view returns (uint) {
         return contractType[a];
     }
