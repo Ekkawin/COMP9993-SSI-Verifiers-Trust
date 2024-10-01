@@ -32,7 +32,7 @@ try {
 getAccount(web3, "acc0");
 const from = web3.eth.accounts.wallet[0].address;
 
-app.post("/verifier/verify", async (req: any, res: any) => {
+app.post("/verify", async (req: any, res: any) => {
   const data = req.body;
   const issuerAddress = data?.issuerAddress;
   const issuerSignature = data?.issuerSignature;
@@ -68,7 +68,7 @@ app.post("/verifier/verify", async (req: any, res: any) => {
   res.sendStatus(200);
 });
 
-app.post("/verifier/trustanchor/:address", async (req: any, res: any) => {
+app.post("/verify-trustanchor/:address", async (req: any, res: any) => {
   const _trustAnchorAddress = req.params?.address;
   if (!_trustAnchorAddress) {
     res.status(400);

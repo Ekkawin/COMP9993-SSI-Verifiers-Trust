@@ -3,7 +3,6 @@
 pragma solidity ^0.8.0;
 
 contract L1VerifierRegistry {
-    
     address public owner;
     mapping(address => string) public hash;
 
@@ -15,14 +14,12 @@ contract L1VerifierRegistry {
 
     event LogGraph(address, address, address);
 
-    function addHash(address root, address newContractAddress) public {
-
+    function addContract(address root, address newContractAddress) public {
         // TODO: Do checking
         emit AddHash(root, newContractAddress);
-        
     }
 
-    function _addHash(address root, string memory _hash) public  onlyOwner{
+    function _addHash(address root, string memory _hash) public onlyOwner {
         hash[root] = _hash;
     }
 
@@ -30,12 +27,9 @@ contract L1VerifierRegistry {
         hash[root] = "";
     }
 
-
-    function getHash(address root) public view returns(string memory){
+    function getHash(address root) public view returns (string memory) {
         return hash[root];
     }
-
-    
 
     modifier onlyOwner() {
         require(msg.sender == owner);

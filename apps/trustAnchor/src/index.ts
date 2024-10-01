@@ -68,7 +68,7 @@ app.post("/verify/:id", async (req: any, res: any) => {
   const publicKey =  await issuerRegistryContract.methods.getSignature(issuerAddress).call({from})
   
 
-  await verifyContext(publicKey, Buffer.from(data?.data))
+  // await verifyContext(publicKey, Buffer.from(data?.data))
 
   // Emit result
   const trustAnchorContract = getContract(

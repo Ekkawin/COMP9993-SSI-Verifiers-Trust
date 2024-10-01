@@ -66,31 +66,40 @@ app.post("/add-root", async (req, res) => {
   res.send(200);
 });
 
-// app.put("/add-root", async (req, res) => {
-//   const data = req.body;
-//   const address = data?.contractAddress;
-//   const callerAddress = data?.callerAddress
+app.post("/graph", async (req, res) => {
+  const srcAddress = req?.body?.srcAddress;
+  const desAddress = req?.body?.desAddress;
+  const score = req?.body?.score || 0;
 
-//   const verifierRegistryContract = getContract("VerifierRegistry", verifierRegistryAddress, web3)
+  // TODO: check the correcteness of forming a graph
 
-//   const contract = getContract(
-//     "L1VerifierRegistry",
-//     l1VerifierAddress,
-//     web3
-//   ).methods.addHash(address, address);
+  await prisma.graphEdge.create({
+    data: {
+      srcAddress,
+      desAddress,
+      score,
+    },
+  });
 
-//   const gasPrice = await web3.eth.getGasPrice(ETH_DATA_FORMAT);
-//   const gasLimit = await contract.estimateGas({ from }, DEFAULT_RETURN_FORMAT);
+  const edges = await prisma.graphEdge.findMany({
+    orderBy: { desAddress: "asc" },
+  });
+  console.log(edges);
+  const hash = crypto.createHash("sha256").update(JSON.stringify(edges)).digest("hex")
+  console.log("hash", hash)
+  res.send(200);
+});
 
-//   const tx = await contract.send({
-//     from,
-//     gasPrice,
-//     gas: GasHelper.gasPay(gasLimit),
-//   });
+app.get("/graph", async (req, res) => {
 
-//   console.log(tx);
-//   res.send(200);
-// });
+  const edges = await prisma.graphEdge.findMany({
+    orderBy: { desAddress: "asc" },
+  });
+  console.log(edges);
+  const hash = crypto.createHash("sha256").update(JSON.stringify(edges)).digest("hex")
+  console.log("hash", hash)
+  res.send(200);
+});
 
 app.get("/merkletree/:id", async (req, res) => {
   const id = req?.params?.id;

@@ -26,3 +26,11 @@ model PlatformContractAddress {
 
   @@id([graphContractAddress, verifierRegistryAddress, issuerRegistryAddress, lVerifierAddress])
 }
+
+model GraphEdge {
+  srcAddress String
+  desAddress String
+  score Int
+
+  @@id([srcAddress,desAddress])
+}
