@@ -49,6 +49,11 @@
 		"test": {
 			"cache": true,
 			"dependsOn": ["build"]
+		},
+		"generate": {
+			"cache": false,
+			"persistent": true
+			
 		}
 	}
 }

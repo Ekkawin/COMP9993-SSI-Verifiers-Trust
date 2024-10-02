@@ -12,10 +12,11 @@
 
     /* Language and Environment */
     "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "lib": ["es6"],       
-    "paths": {
-      "@common":["../../commons/index.ts"]
-    },                            
+    "lib": ["es6"],     
+    "paths": { "~/*": ["src/*"]},
+    // "paths": {
+    //   "@common":["../../commons/index.ts"]
+    // },                            
                           /* Specify a set of bundled library declaration files that describe the target runtime environment. */
     // "jsx": "preserve",                                /* Specify what JSX code is generated. */
     // "experimentalDecorators": true,                   /* Enable experimental support for legacy experimental decorators. */
@@ -109,5 +110,8 @@
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
-  }
+  },
+  "include": ["./src", "./scripts"],
+  "files": ["./hardhat.config.ts"]
+
 }

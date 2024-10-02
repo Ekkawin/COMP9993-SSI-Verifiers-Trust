@@ -1,0 +1,151 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/Graph.sol": {
+      "lastModificationDate": 1727846260279,
+      "contentHash": "27eda108102328f8410f8a82fe4eaee7",
+      "sourceName": "contracts/Graph.sol",
+      "solcConfig": {
+        "version": "0.8.27",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./VerifierRegistry.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Graph"
+      ]
+    },
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/VerifierRegistry.sol": {
+      "lastModificationDate": 1727846260270,
+      "contentHash": "338d9337da10f1483d2aae7944ce5068",
+      "sourceName": "contracts/VerifierRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.27",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VerifierRegistry"
+      ]
+    },
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/IssuerRegistry.sol": {
+      "lastModificationDate": 1727846260265,
+      "contentHash": "6f9d4267d5336200dd86acad79c7dc9b",
+      "sourceName": "contracts/IssuerRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.27",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IssuerRegistry"
+      ]
+    },
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/L1VerifierRegistry.sol": {
+      "lastModificationDate": 1727846260276,
+      "contentHash": "ce2524fa1f59a1291a5a5b1fa96aa1b5",
+      "sourceName": "contracts/L1VerifierRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.27",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "L1VerifierRegistry"
+      ]
+    }
+  }
+}

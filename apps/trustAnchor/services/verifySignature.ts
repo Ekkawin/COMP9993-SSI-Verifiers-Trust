@@ -1,6 +1,5 @@
-import { getAccount, getContract, initProvider, nullAddress } from "common";
-import Web3 from "web3";
-import { Web3BaseProvider } from "web3-types";
+import { nullAddress } from "common";
+import { ethers } from "hardhat";
 
 export const verifySignature = async ({
   issuerRegistryAddress = "",
@@ -11,32 +10,17 @@ export const verifySignature = async ({
   issuerAddress?: string;
   issuerSignature?: string;
 }) => {
-  let web3Provider: Web3BaseProvider;
-  let web3: Web3;
-
   console.log("issuerRegistryAddress", issuerRegistryAddress);
 
-  try {
-    web3Provider = initProvider();
-    web3 = new Web3(web3Provider);
-  } catch (error) {
-    console.error(error);
-    throw "Web3 cannot be initialised.";
-  }
-  getAccount(web3, "acc0");
-
-  const issuerRegistry = getContract(
+  const issuerRegistry = await ethers.getContractAt(
     "IssuerRegistry",
-    issuerRegistryAddress,
-    web3
+    issuerRegistryAddress
   );
 
-  const contract = issuerRegistry.methods.verifySignature(
+  const result = await issuerRegistry.verifySignature(
     issuerAddress || nullAddress,
     issuerSignature
   );
-  const from = web3.eth.accounts.wallet[0].address;
-  const result = await contract.call({ from });
 
   return result;
 };

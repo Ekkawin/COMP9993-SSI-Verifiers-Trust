@@ -17,6 +17,7 @@
     "dev:verifier": "turbo run dev:verifier",
     "dev:trustanchor": "turbo run dev:trustanchor",
     "dev:issuer": "turbo run dev:issuer",
-    "migration": "turbo run migration"
+    "migration": "turbo run migration",
+    "generate": "turbo run generate"
   }
 }
