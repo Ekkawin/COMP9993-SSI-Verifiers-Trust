@@ -1,59 +1,58 @@
 {
-	"$schema": "https://turbo.build/schema.json",
-	"globalDependencies": ["**/.env.*local"],
-	"globalEnv": [
-		"NODE_ENV",
-		"VITE_API_URL",
-		"VITE_ENABLE_FAST_SIGNING",
-		"VITE_WALLET_ADDRESS",
-		"VITE_WALLET_PUBLIC_KEY",
-		"VITE_WALLET_PRIVATE_KEY",
-		"VITE_ACTIVE_CHAIN"
-	],
-	"tasks": {
-		"build": {
-			"dependsOn": ["^build"],
-			"outputs": [".next/**", "!.next/cache/**", "build/**"]
-		},
-		"lint": {
-			"dependsOn": ["^lint"]
-		},
-		"dev": {
-			"cache": false,
-			"persistent": true
-		},
-		"dev:new": {
-			"cache": false,
-			"persistent": true
-		},
-		"dev2": {
-			"cache": false,
-			"persistent": true
-		},
-        "dev:verifier": {
-			"cache": false,
-			"persistent": true
-		},
-        "dev:trustanchor": {
-			"cache": false,
-			"persistent": true
-		},
-        "dev:issuer": {
-			"cache": false,
-			"persistent": true
-		},
-        "migration": {
-			"cache": false,
-			"persistent": true
-		},
-		"test": {
-			"cache": true,
-			"dependsOn": ["build"]
-		},
-		"generate": {
-			"cache": false,
-			"persistent": true
-			
-		}
-	}
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "NODE_ENV",
+    "VITE_API_URL",
+    "VITE_ENABLE_FAST_SIGNING",
+    "VITE_WALLET_ADDRESS",
+    "VITE_WALLET_PUBLIC_KEY",
+    "VITE_WALLET_PRIVATE_KEY",
+    "VITE_ACTIVE_CHAIN"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "build/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev:new": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev2": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev:verifier": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev:trustanchor": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev:issuer": {
+      "cache": false,
+      "persistent": true
+    },
+    "migration": {
+      "cache": false,
+      "persistent": true
+    },
+    "test:verify": {
+      "cache": false,
+      "persistent": true
+    },
+    "generate": {
+      "cache": false,
+      "persistent": true
+    }
+  }
 }
