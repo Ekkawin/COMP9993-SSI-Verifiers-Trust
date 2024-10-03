@@ -12,11 +12,12 @@ datasource db {
 
 model Result {
   concurrency Int
-  number Int
+  number Int @default(autoincrement())
   timeRequestBackend BigInt?
   timeTAVerify BigInt?
   timePublishLog BigInt?
   timeTotal BigInt?
+  isSuccess Int
 
   @@id([concurrency, number])
 }

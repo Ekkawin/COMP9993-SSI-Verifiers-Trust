@@ -1,7 +1,5 @@
 import express from "express";
-import {
-  nullAddress,
-} from "common";
+import { nullAddress } from "common";
 import { TrustAnchorURL, verifyContext, verifySignature } from "../services";
 import axios from "axios";
 import * as fs from "fs";
@@ -29,7 +27,10 @@ app.post("/verify", async (req: any, res: any) => {
   await verifyContext(key, data?.data);
 
   // Emit result
-  const verifierContract = await ethers.getContractAt("Verifier", verifierAddress);
+  const verifierContract = await ethers.getContractAt(
+    "Verifier",
+    verifierAddress
+  );
 
   const tx = await verifierContract.verify(
     holderWallet || nullAddress,
@@ -47,22 +48,26 @@ app.post("/verify-trustanchor/:address", async (req: any, res: any) => {
     req.send({ message: "Require trust anchor address" });
   }
   console.log("trustAnchorAddress", _trustAnchorAddress);
-
-  const request = await axios.post(
-    TrustAnchorURL.TRUSTANCHORA,
-    {
-      verifierAddress,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
+  try {
+    const request = await axios.post(
+      TrustAnchorURL.TRUSTANCHORA,
+      {
+        verifierAddress,
       },
-    }
-  );
-  // console.log(request,"hi\n")
-  const message = request?.data?.message;
-  // console.log(message)
-  res.send(message);
+      {
+        timeout:10000,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    // console.log(request,"hi\n")
+    const message = request?.data;
+    // console.log(message)
+    res.send(message);
+  } catch (error) {
+    res.send(400);
+  }
   // res.sendStatus(200);
 });
 
@@ -82,7 +87,7 @@ app.listen(port, async () => {
   issuerRegisterAddress = issReAddr;
 
   const verifierContract = await ethers.deployContract("Verifier");
-  verifierAddress = String(verifierContract?.target)
+  verifierAddress = String(verifierContract?.target);
   console.log("Deploy Verifier with Address", verifierAddress);
 
   // interface Option {
@@ -124,14 +129,13 @@ app.listen(port, async () => {
 
   const verifierRegistryContract = await ethers.getContractAt(
     "VerifierRegistry",
-    address,
+    address
   );
 
   const tx = await verifierRegistryContract.registerContract(
     verifierAddress,
     1
   );
-
 
   console.log(`Example app listening on port ${port}`);
 });

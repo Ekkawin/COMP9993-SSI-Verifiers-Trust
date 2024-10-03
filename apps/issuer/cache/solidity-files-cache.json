@@ -38,8 +38,8 @@
       ]
     },
     "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/issuer/contracts/IssuerRegistry.sol": {
-      "lastModificationDate": 1727789401800,
-      "contentHash": "b860e65bba2c5c2343d2af23522b4150",
+      "lastModificationDate": 1727847871791,
+      "contentHash": "6f9d4267d5336200dd86acad79c7dc9b",
       "sourceName": "contracts/IssuerRegistry.sol",
       "solcConfig": {
         "version": "0.8.27",

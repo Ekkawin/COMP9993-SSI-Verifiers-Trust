@@ -21,7 +21,7 @@ app.post("/verify-request", async (req: any, res: any) => {
   const verifierAddress = req.body?.verifierAddress;
   requestors = { ...requestors, [id]: verifierAddress };
 
-  res.send({ message: `Your tracsaction is ${id}` });
+  res.send({ message: `Your tracsaction is ${id}`, requestId:id });
 });
 
 app.post("/verify/:id", async (req: any, res: any) => {
@@ -83,53 +83,7 @@ app.listen(port, async () => {
     }
   );
 
-  // interface Option {
-  //   readonly address?: string | string[] | undefined;
-  //   readonly topics?: string[] | undefined;
-  // }
-
-  // const optionsTAVerify: Option = {
-  //   address: trustanchorAddress,
-  //   topics: [
-  //     web3.utils.sha3("TAVerify(address,address,string,string)"),
-  //   ] as string[],
-  // };
-  // const jsonInterfaceTAVerify = [
-  //   {
-  //     type: "address",
-  //     name: "callerAddress",
-  //   },
-  //   {
-  //     type: "address",
-  //     name: "verifierAddress",
-  //   },
-  //   {
-  //     type: "string",
-  //     name: "status",
-  //   },
-  //   {
-  //     type: "string",
-  //     name: "message",
-  //   },
-  // ];
-
-  // const subscriptionTAVerify = await web3.eth.subscribe(
-  //   "logs",
-  //   optionsTAVerify
-  // );
-  // subscriptionTAVerify.on("data", async (event: any) => {
-  //   const eventData = web3.eth.abi.decodeLog(
-  //     jsonInterfaceTAVerify,
-  //     event.data,
-  //     event.topics
-  //   );
-  //   console.log(
-  //     `Event TAVerify Caller Address: ${eventData.callerAddress}, Verifier Address: ${eventData.verifierAddress}, Status: ${eventData.status}, Message: ${eventData.message}`
-  //   );
-  // });
-  // subscriptionTAVerify.on("error", async (error: any) =>
-  //   console.log("Error listening on event: ", error)
-  // );
+  
 
   const verifierRegistryContract = await ethers.getContractAt(
     "VerifierRegistry",
