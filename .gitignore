@@ -10,7 +10,7 @@ lerna-debug.log*
 artifacts*
 volumes*
 .turbo**
-.dev**
+# .dev**
 **/contracts/*.json
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
