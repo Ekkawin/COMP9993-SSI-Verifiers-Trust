@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/Graph.sol": {
-      "lastModificationDate": 1728122557437,
-      "contentHash": "77d5d7e27c405fa5eafe7fdcb5b4b067",
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/test-graph/contracts/Graph.sol": {
+      "lastModificationDate": 1728124320392,
+      "contentHash": "27eda108102328f8410f8a82fe4eaee7",
       "sourceName": "contracts/Graph.sol",
       "solcConfig": {
         "version": "0.8.27",
@@ -39,8 +39,8 @@
         "Graph"
       ]
     },
-    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/VerifierRegistry.sol": {
-      "lastModificationDate": 1727859187511,
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/test-graph/contracts/VerifierRegistry.sol": {
+      "lastModificationDate": 1728124320394,
       "contentHash": "338d9337da10f1483d2aae7944ce5068",
       "sourceName": "contracts/VerifierRegistry.sol",
       "solcConfig": {
@@ -75,8 +75,8 @@
         "VerifierRegistry"
       ]
     },
-    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/IssuerRegistry.sol": {
-      "lastModificationDate": 1727859187505,
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/test-graph/contracts/IssuerRegistry.sol": {
+      "lastModificationDate": 1728124320392,
       "contentHash": "6f9d4267d5336200dd86acad79c7dc9b",
       "sourceName": "contracts/IssuerRegistry.sol",
       "solcConfig": {
@@ -111,8 +111,8 @@
         "IssuerRegistry"
       ]
     },
-    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/L1VerifierRegistry.sol": {
-      "lastModificationDate": 1727859187516,
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/test-graph/contracts/L1VerifierRegistry.sol": {
+      "lastModificationDate": 1728124320393,
       "contentHash": "ce2524fa1f59a1291a5a5b1fa96aa1b5",
       "sourceName": "contracts/L1VerifierRegistry.sol",
       "solcConfig": {
@@ -145,6 +145,78 @@
       ],
       "artifacts": [
         "L1VerifierRegistry"
+      ]
+    },
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/test-graph/contracts/TrustAnchor.sol": {
+      "lastModificationDate": 1728136828877,
+      "contentHash": "cd1e4eb65ab6c835214eae3d8650cbbe",
+      "sourceName": "contracts/TrustAnchor.sol",
+      "solcConfig": {
+        "version": "0.8.27",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "TrustAnchor"
+      ]
+    },
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/test-graph/contracts/Verifier.sol": {
+      "lastModificationDate": 1728136828898,
+      "contentHash": "ece2cbc49cce91d52bc4bdc9fd69fd2b",
+      "sourceName": "contracts/Verifier.sol",
+      "solcConfig": {
+        "version": "0.8.27",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Verifier"
       ]
     }
   }

@@ -16,6 +16,7 @@ const app = express();
 const port = 3003;
 let l1VerifierAddress: string;
 let verifierRegistryAddress: string;
+let graphAddress: string;
 
 app.use(bodyParser.json());
 
@@ -40,14 +41,16 @@ app.post("/graph", async (req, res) => {
   const score = req?.body?.score || 0;
 
   // TODO: check the correcteness of forming a graph
+  try {
 
-  await prisma.graphEdge.create({
+  const x = await prisma.graphEdge.create({
     data: {
       srcAddress,
       desAddress,
       score,
     },
   });
+  console.log("X==>",x)
 
   const edges = await prisma.graphEdge.findMany({
     orderBy: { desAddress: "asc" },
@@ -58,7 +61,13 @@ app.post("/graph", async (req, res) => {
     .update(JSON.stringify(edges))
     .digest("hex");
   console.log("hash", hash);
-  res.send(200);
+  
+    const graphContract = await ethers.getContractAt("Graph", graphAddress);
+    await graphContract.modifyGraphHash(hash);
+    res.send({hash});
+  } catch (_) {
+    res.send(400);
+  }
 });
 
 app.get("/graph", async (req, res) => {
@@ -71,7 +80,7 @@ app.get("/graph", async (req, res) => {
     .update(JSON.stringify(edges))
     .digest("hex");
   console.log("hash", hash);
-  res.send(200);
+  res.send({hash});
 });
 
 app.get("/merkletree/:id", async (req, res) => {
@@ -107,7 +116,7 @@ app.listen(port, async () => {
   l1VerifierAddress = platformAddresses?.lVerifierAddress as string;
   verifierRegistryAddress =
     platformAddresses?.verifierRegistryAddress as string;
-  const graphAddress = platformAddresses?.graphContractAddress as string;
+  graphAddress = platformAddresses?.graphContractAddress as string;
   const issuerRegistryAddress =
     platformAddresses?.issuerRegistryAddress as string;
 

@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "name": "test-graph",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "-": "^0.0.1",
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "@nomicfoundation/hardhat-ignition": "^0.15.6",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.6",
+    "@types/body-parser": "^1.19.5",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.1",
+    "ethers": "^6.13.3",
+    "hardhat": "^2.22.12",
+    "prisma": "^5.14.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@prisma/client": "5.14.0",
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.3",
+    "common": "workspace:*",
+    "express": "^4.21.0",
+    "fs-extra": "^11.1.1",
+    "path": "^0.12.7",
+    "solc": "^0.8.27",
+    "web3": "^4.0.2",
+    "web3-types": "^1.8.0"
+  },
+  "scripts": {
+    "test:verify": "ts-node src/index.ts"
+  }
+}

@@ -5,16 +5,17 @@ pragma solidity ^0.8.0;
 import "./VerifierRegistry.sol";
 
 contract Graph {
-    enum ContractType {
-        Holder,
-        Verifier,
-        TrustAnchor
-    }
+    // enum ContractType {
+    //     Holder,
+    //     Verifier,
+    //     TrustAnchor
+    // }
 
-    mapping(address => address[]) public graph;
+    // mapping(address => address[]) public graph;
+    string public grapgHash;
     address public owner;
     address private verifierRegistryAddress;
-    ContractType private contractType;
+    // ContractType private contractType;
 
     constructor() {
         owner = msg.sender;
@@ -22,41 +23,45 @@ contract Graph {
 
     event LogGraph(address, address, address);
 
-    function addEdge(address src, address des) public {
-        ContractType srcContractType = mapContractType(
-            VerifierRegistry(verifierRegistryAddress).getContractType(src)
-        );
-        ContractType desContractType = mapContractType(
-            VerifierRegistry(verifierRegistryAddress).getContractType(des)
-        );
+    // function addEdge(address src, address des) public {
+    //     ContractType srcContractType = mapContractType(
+    //         VerifierRegistry(verifierRegistryAddress).getContractType(src)
+    //     );
+    //     ContractType desContractType = mapContractType(
+    //         VerifierRegistry(verifierRegistryAddress).getContractType(des)
+    //     );
 
-        require(desContractType != ContractType.Holder);
-        require(srcContractType != ContractType.TrustAnchor);
-        require(
-            !(srcContractType == ContractType.Verifier &&
-                desContractType == ContractType.Holder)
-        );
+    //     require(desContractType != ContractType.Holder);
+    //     require(srcContractType != ContractType.TrustAnchor);
+    //     require(
+    //         !(srcContractType == ContractType.Verifier &&
+    //             desContractType == ContractType.Holder)
+    //     );
 
-        if (desContractType == ContractType.Verifier) {
-            address contractOwner = VerifierRegistry(verifierRegistryAddress)
-                .getContractOwner(src);
-            assert(contractOwner != msg.sender);
-        }
+    //     if (desContractType == ContractType.Verifier) {
+    //         address contractOwner = VerifierRegistry(verifierRegistryAddress)
+    //             .getContractOwner(src);
+    //         assert(contractOwner != msg.sender);
+    //     }
 
-        graph[des].push(src);
-        emit LogGraph(des, src, msg.sender);
-    }
+    //     graph[des].push(src);
+    //     emit LogGraph(des, src, msg.sender);
+    // }
 
-    function getEdges(address src) public view returns (address[] memory) {
-        return (graph[src]);
-    }
+    // function getEdges(address src) public view returns (address[] memory) {
+    //     return (graph[src]);
+    // }
 
-    function mapContractType(uint u) private pure returns (ContractType) {
-        if (u == 0) return ContractType.Holder;
-        if (u == 1) return ContractType.Verifier;
-        if (u == 2) return ContractType.TrustAnchor;
+    // function mapContractType(uint u) private pure returns (ContractType) {
+    //     if (u == 0) return ContractType.Holder;
+    //     if (u == 1) return ContractType.Verifier;
+    //     if (u == 2) return ContractType.TrustAnchor;
 
-        return ContractType.Holder;
+    //     return ContractType.Holder;
+    // }
+
+    function modifyGraphHash(string memory _grapgHash) public onlyOwner{
+            grapgHash = _grapgHash;
     }
 
     function addVerifierRegisterAddress(address a) public onlyOwner {
