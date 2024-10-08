@@ -19,6 +19,7 @@
     "dev:issuer": "turbo run dev:issuer",
     "migration": "turbo run migration",
     "generate": "turbo run generate",
-    "test:verify": "turbo run test:verify"
+    "test:verify": "turbo run test:verify",
+    "dev:node": "turbo run node"
   }
 }
