@@ -89,13 +89,13 @@ app.post("/score", async (req, res) => {
     verifierRegistryAddress
   );
 
-  console.log("holderWallet", holderWallet);
-  console.log("srcAddress", srcAddress);
+  // console.log("holderWallet", holderWallet);
+  // console.log("srcAddress", srcAddress);
   try {
     const contractType = await verifierRegistryContract.getContractType(
       srcAddress
     );
-    console.log("contractType", contractType);
+    // console.log("contractType", contractType);
 
     let from;
     let logs;
@@ -108,11 +108,12 @@ app.post("/score", async (req, res) => {
       case 2:
         from = await emitterContract.filters.TAVerify(null, null, null, null);
         logs = (await emitterContract.queryFilter(from, 0)) as any[];
-        console.log("logs", logs);
+        // console.log("logs", logs);
         hasRightToVote = logs.some((a) => {
+          // console.log("a?.from", a?.from);
           return (
             String(a?.args[0]).toLowerCase() == holderWallet.toLowerCase() &&
-            String(a?.args[4]).toLowerCase() == srcAddress.toLowerCase()
+            srcAddress.toLowerCase() == String(a?.args[4]).toLowerCase()
           );
         });
         break;
@@ -122,7 +123,7 @@ app.post("/score", async (req, res) => {
         hasRightToVote = logs.some(
           (a) =>
             String(a?.args[0]).toLowerCase() == holderWallet.toLowerCase() &&
-            String(a?.args[3]).toLowerCase() == srcAddress.toLowerCase()
+            srcAddress.toLowerCase() == String(a?.args[3]).toLowerCase()
         );
         break;
       default: {
@@ -229,7 +230,7 @@ app.get("/merkletree/:id", async (req, res) => {
 });
 
 app.listen(port, async () => {
-  await prisma.graphEdge.deleteMany()
+  await prisma.graphEdge.deleteMany();
   const platformAddresses = await prisma.platformContractAddress.findFirst();
   l1VerifierAddress = platformAddresses?.lVerifierAddress as string;
   verifierRegistryAddress =

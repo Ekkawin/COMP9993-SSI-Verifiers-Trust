@@ -12,8 +12,19 @@ contract TrustAnchor {
         emitterAddress = _emitterAddress;
     }
 
-   function verify(address holder, address verifier, string memory status, string memory message) external onlyOwner {
-        VerifyEventEmitter(emitterAddress).emitTAEvent(holder, verifier, status, message);
+    function verify(
+        address holder,
+        address verifier,
+        string memory status,
+        string memory message
+    ) external onlyOwner {
+        VerifyEventEmitter(emitterAddress).emitTAEvent(
+            holder,
+            verifier,
+            address(this),
+            status,
+            message
+        );
     }
 
     modifier onlyOwner() {
