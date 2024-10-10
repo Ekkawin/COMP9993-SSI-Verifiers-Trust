@@ -3,8 +3,8 @@
 pragma solidity ^0.8.0;
 
 contract VerifyEventEmitter {
-    event TAVerify(address, address, string, string, address);
-    event Verify(address, string, string, address);
+    event TAVerify(address, address, string, string);
+    event Verify(address, string, string);
 
     constructor() {}
 
@@ -13,14 +13,14 @@ contract VerifyEventEmitter {
         address verifier,
         string memory status,
         string memory message
-    ) public {
-        emit TAVerify(holder, verifier, status, message, msg.sender);
+    ) external   {
+        emit TAVerify(holder, verifier, status, message);
     }
     function emitVerifyEvent(
         address holder,
         string memory status,
         string memory message
-    ) public {
-        emit Verify(holder, status, message, msg.sender);
+    ) external   {
+        emit Verify(holder, status, message);
     }
 }
