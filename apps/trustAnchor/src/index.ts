@@ -32,17 +32,20 @@ app.post("/verify/:id", async (req: any, res: any) => {
   const holderWallet = data?.holderWallet;
   const verifierAddress = requestors[id];
 
-  const result = await verifySignature({
-    issuerRegistryAddress: issuerRegisterAddress,
-    issuerAddress,
-    issuerSignature,
-  });
+  
 
   const issuerRegistryContract = await ethers.getContractAt(
     "IssuerRegistry",
     issuerRegisterAddress
   );
   const publicKey = await issuerRegistryContract.getSignature(issuerAddress);
+
+  const result = await verifySignature({
+    issuerRegistryAddress: issuerRegisterAddress,
+    issuerAddress,
+    issuerSignature: publicKey,
+  });
+  console.log("result",result)
 
   // await verifyContext(publicKey, Buffer.from(data?.data))
 
@@ -56,27 +59,33 @@ app.post("/verify/:id", async (req: any, res: any) => {
     holderWallet || nullAddress,
     verifierAddress || nullAddress,
     "200",
-    ""
+    `${result}`
   );
 
-  res.sendStatus(200);
+  res.send(tx);
 });
 
 app.listen(port, async () => {
   const data = fs.readFileSync("../../.dev.txt", "utf-8");
 
-  const [address, issReAddr] = data.split("\n");
+  const [address, issReAddr, _, _a, emitterAddress] = data.split("\n");
   console.log("ver regis addr", address);
   console.log("ver regis addr", issReAddr);
   issuerRegisterAddress = issReAddr;
 
-  const trustanchorContract = await ethers.deployContract("TrustAnchor");
-  trustanchorAddress = String(trustanchorContract.target);
+  console.log("emitterAddress",emitterAddress)
+
+  // const trustanchorContract = await ethers.deployContract("TrustAnchor", trustanchorContract1);
+  const trustanchorContract1 = await ethers.getContractFactory("TrustAnchor");
+  const trustanchorContract = await trustanchorContract1.deploy(emitterAddress)
+  trustanchorAddress = String(trustanchorContract?.target);
   console.log("Deploy Trust Anchor with Address", trustanchorAddress);
 
-  trustanchorContract.on(
+  const emitterContract = await ethers.getContractAt("VerifyEventEmitter", emitterAddress)
+
+  emitterContract.on(
     "TAVerify",
-    (callerAddress, verifierAddress, status, message, _) => {
+    (callerAddress, verifierAddress, status, message, _, _a) => {
       console.log(
         `Event TAVerify Caller Address: ${callerAddress}, Verifier Address: ${verifierAddress}, Status: ${status}, Message: ${message}`
       );

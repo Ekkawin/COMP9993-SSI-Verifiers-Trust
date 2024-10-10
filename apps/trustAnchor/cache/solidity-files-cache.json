@@ -38,8 +38,8 @@
       ]
     },
     "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/trustAnchor/contracts/TrustAnchor.sol": {
-      "lastModificationDate": 1727849127032,
-      "contentHash": "cd1e4eb65ab6c835214eae3d8650cbbe",
+      "lastModificationDate": 1728459827281,
+      "contentHash": "e945138b328289af6258051e3b5eaeea",
       "sourceName": "contracts/TrustAnchor.sol",
       "solcConfig": {
         "version": "0.8.27",
@@ -65,7 +65,9 @@
           }
         }
       },
-      "imports": [],
+      "imports": [
+        "./VerifyEventEmitter.sol"
+      ],
       "versionPragmas": [
         "^0.8.0"
       ],
@@ -107,6 +109,42 @@
       ],
       "artifacts": [
         "VerifierRegistry"
+      ]
+    },
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/trustAnchor/contracts/VerifyEventEmitter.sol": {
+      "lastModificationDate": 1728459827291,
+      "contentHash": "b74bebf0124a14a900f26df630e83710",
+      "sourceName": "contracts/VerifyEventEmitter.sol",
+      "solcConfig": {
+        "version": "0.8.27",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VerifyEventEmitter"
       ]
     }
   }

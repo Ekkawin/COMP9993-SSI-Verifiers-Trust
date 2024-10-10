@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/Graph.sol": {
-      "lastModificationDate": 1728122557437,
+      "lastModificationDate": 1728446363981,
       "contentHash": "77d5d7e27c405fa5eafe7fdcb5b4b067",
       "sourceName": "contracts/Graph.sol",
       "solcConfig": {
@@ -40,7 +40,7 @@
       ]
     },
     "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/VerifierRegistry.sol": {
-      "lastModificationDate": 1727859187511,
+      "lastModificationDate": 1728446363973,
       "contentHash": "338d9337da10f1483d2aae7944ce5068",
       "sourceName": "contracts/VerifierRegistry.sol",
       "solcConfig": {
@@ -76,7 +76,7 @@
       ]
     },
     "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/IssuerRegistry.sol": {
-      "lastModificationDate": 1727859187505,
+      "lastModificationDate": 1728446363968,
       "contentHash": "6f9d4267d5336200dd86acad79c7dc9b",
       "sourceName": "contracts/IssuerRegistry.sol",
       "solcConfig": {
@@ -112,7 +112,7 @@
       ]
     },
     "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/L1VerifierRegistry.sol": {
-      "lastModificationDate": 1727859187516,
+      "lastModificationDate": 1728446363976,
       "contentHash": "ce2524fa1f59a1291a5a5b1fa96aa1b5",
       "sourceName": "contracts/L1VerifierRegistry.sol",
       "solcConfig": {
@@ -145,6 +145,42 @@
       ],
       "artifacts": [
         "L1VerifierRegistry"
+      ]
+    },
+    "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/platform/contracts/VerifyEventEmitter.sol": {
+      "lastModificationDate": 1728459829494,
+      "contentHash": "b74bebf0124a14a900f26df630e83710",
+      "sourceName": "contracts/VerifyEventEmitter.sol",
+      "solcConfig": {
+        "version": "0.8.27",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "VerifyEventEmitter"
       ]
     }
   }

@@ -55,7 +55,7 @@ app.post("/verify-trustanchor/:address", async (req: any, res: any) => {
         verifierAddress,
       },
       {
-        timeout:10000,
+        timeout: 10000,
         headers: {
           "Content-Type": "application/json",
         },
@@ -80,52 +80,16 @@ app.post("/receiveResult/:id", async (req: any, res: any) => {
 app.listen(port, async () => {
   const data = fs.readFileSync("../../.dev.txt", "utf-8");
 
-  const [address, issReAddr] = data.split("\n");
+  const [address, issReAddr, _, _a, emitterAddress] = data.split("\n");
 
   console.log("ver regis addr", address);
   console.log("ver regis addr", issReAddr);
   issuerRegisterAddress = issReAddr;
 
-  const verifierContract = await ethers.deployContract("Verifier");
+  const _verifierContract = await ethers.getContractFactory("Verifier");
+  const verifierContract = await _verifierContract.deploy(emitterAddress)
   verifierAddress = String(verifierContract?.target);
   console.log("Deploy Verifier with Address", verifierAddress);
-
-  // interface Option {
-  //   readonly address?: string | string[] | undefined;
-  //   readonly topics?: string[] | undefined;
-  // }
-
-  // const optionsVerify: Option = {
-  //   address: verifierAddress,
-  //   topics: [web3.utils.sha3("Verify(address, string, string)")] as string[],
-  // };
-  // const jsonInterfaceVerify = [
-  //   {
-  //     type: "address",
-  //     name: "callerAddress",
-  //   },
-  //   {
-  //     type: "string",
-  //     name: "status",
-  //   },
-  //   {
-  //     type: "string",
-  //     name: "message",
-  //   },
-  // ];
-
-  // const subscriptionVerify = await web3.eth.subscribe("logs", optionsVerify);
-  // subscriptionVerify.on("data", async (event: any) => {
-  //   const eventData = web3.eth.abi.decodeLog(
-  //     jsonInterfaceVerify,
-  //     event.data,
-  //     event.topics
-  //   );
-  //   console.log(`Event Verify ${eventData.address}`);
-  // });
-  // subscriptionVerify.on("error", async (error: any) =>
-  //   console.log("Error listening on event: ", error)
-  // );
 
   const verifierRegistryContract = await ethers.getContractAt(
     "VerifierRegistry",

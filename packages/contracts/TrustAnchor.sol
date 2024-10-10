@@ -1,18 +1,19 @@
 /// SPDX-License-Identifier: UNLICENSED
 
 pragma solidity ^0.8.0;
+import "./VerifyEventEmitter.sol";
 
 contract TrustAnchor {
     address public owner;
+    address public emitterAddress;
 
-    event TAVerify(address, address, string, string);
-
-    constructor() {
+    constructor(address _emitterAddress) {
         owner = msg.sender;
+        emitterAddress = _emitterAddress;
     }
 
    function verify(address holder, address verifier, string memory status, string memory message) external onlyOwner {
-        emit TAVerify(holder, verifier, status, message);
+        VerifyEventEmitter(emitterAddress).emitTAEvent(holder, verifier, status, message);
     }
 
     modifier onlyOwner() {

@@ -11,6 +11,7 @@ async function main() {
   );
   const issuerRegistryContract = await ethers.deployContract("IssuerRegistry");
   const l1VerifierContract = await ethers.deployContract("L1VerifierRegistry");
+  const emitterContract = await ethers.deployContract("VerifyEventEmitter");
 
   await prisma.platformContractAddress.deleteMany({});
 
@@ -20,9 +21,10 @@ async function main() {
       verifierRegistryAddress: String(verifierRegistryContract?.target),
       issuerRegistryAddress: String(issuerRegistryContract?.target),
       lVerifierAddress: String(l1VerifierContract?.target),
+      emitterAddress: String(emitterContract?.target),
     },
   });
-  const data = String(verifierRegistryContract?.target) + "\n" + String(issuerRegistryContract?.target) + "\n"+ String(graphContract?.target) + "\n" + String(l1VerifierContract?.target);
+  const data = String(verifierRegistryContract?.target) + "\n" + String(issuerRegistryContract?.target) + "\n"+ String(graphContract?.target) + "\n" + String(l1VerifierContract?.target)+ "\n" + String(emitterContract?.target);
 
   fs.writeFileSync("../../.dev.txt", data);
 }

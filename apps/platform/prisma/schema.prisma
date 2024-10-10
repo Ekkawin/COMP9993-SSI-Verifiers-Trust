@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Node {
+model L1Node {
   rootAddress String
   nodeAddress String
   createdAt   DateTime
@@ -23,6 +23,7 @@ model PlatformContractAddress {
   verifierRegistryAddress String
   issuerRegistryAddress   String
   lVerifierAddress        String
+  emitterAddress          String
 
   @@id([graphContractAddress, verifierRegistryAddress, issuerRegistryAddress, lVerifierAddress])
 }
@@ -30,7 +31,12 @@ model PlatformContractAddress {
 model GraphEdge {
   srcAddress String
   desAddress String
-  score Int
 
-  @@id([srcAddress,desAddress])
+  @@id([srcAddress, desAddress])
+}
+
+model Node {
+  address String @id
+  score   Int
+  numberOfScorer   Int
 }
