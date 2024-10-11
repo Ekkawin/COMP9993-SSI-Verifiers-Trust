@@ -6,10 +6,12 @@ import "./VerifyEventEmitter.sol";
 contract TrustAnchor {
     address public owner;
     address public emitterAddress;
+    address public contractAddress;
 
     constructor(address _emitterAddress) {
         owner = msg.sender;
         emitterAddress = _emitterAddress;
+        contractAddress = address(this);
     }
 
     function verify(
@@ -21,7 +23,7 @@ contract TrustAnchor {
         VerifyEventEmitter(emitterAddress).emitTAEvent(
             holder,
             verifier,
-            address(this),
+            contractAddress,
             status,
             message
         );
