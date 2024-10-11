@@ -6,14 +6,27 @@ import "./VerifyEventEmitter.sol";
 contract TrustAnchor {
     address public owner;
     address public emitterAddress;
+    address public contractAddress;
 
     constructor(address _emitterAddress) {
         owner = msg.sender;
         emitterAddress = _emitterAddress;
+        contractAddress = address(this);
     }
 
-   function verify(address holder, address verifier, string memory status, string memory message) external onlyOwner {
-        VerifyEventEmitter(emitterAddress).emitTAEvent(holder, verifier, status, message);
+    function verify(
+        address holder,
+        address verifier,
+        string memory status,
+        string memory message
+    ) external onlyOwner {
+        VerifyEventEmitter(emitterAddress).emitTAEvent(
+            holder,
+            verifier,
+            contractAddress,
+            status,
+            message
+        );
     }
 
     modifier onlyOwner() {

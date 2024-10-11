@@ -40,7 +40,7 @@ var axios_1 = require("axios");
 var fs = require("fs");
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var start, data, verifierIndex, taIndex, verifierData, taData, x, end, e_1;
+        var start, data, verifierIndex, taIndex, concurrency, verifierData, taData, x, end, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -48,26 +48,25 @@ function main() {
                     data = fs.readFileSync("../../.dev.txt", "utf-8");
                     verifierIndex = Number(process.argv.slice(2)[0]);
                     taIndex = Number(process.argv.slice(2)[1]);
-                    console.log(verifierIndex, taIndex);
+                    concurrency = Number(process.argv.slice(2)[2]);
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
                     verifierData = fs.readFileSync("./verifier.txt", "utf-8").split("\n")[verifierIndex];
                     taData = fs.readFileSync("./trustanchor.txt", "utf-8").split("\n")[taIndex];
-                    return [4 /*yield*/, axios_1.default.post("http://localhost:3003/graph", {
+                    return [4 /*yield*/, axios_1.default.post("http://4.240.54.55/graph", {
                             srcAddress: verifierData,
                             desAddress: taData,
-                            score: 1,
                         })];
                 case 2:
                     x = _a.sent();
                     end = new Date();
-                    fs.appendFileSync("./result.txt", "".concat(end.getTime() - start.getTime(), "\n"));
+                    fs.appendFileSync("./".concat(concurrency, "_result.txt"), "".concat(end.getTime() - start.getTime(), "\n"));
                     return [3 /*break*/, 4];
                 case 3:
                     e_1 = _a.sent();
                     console.log(e_1);
-                    fs.appendFileSync("./result.txt", "0\n");
+                    fs.appendFileSync("./".concat(concurrency, "_result.txt"), "0\n");
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }

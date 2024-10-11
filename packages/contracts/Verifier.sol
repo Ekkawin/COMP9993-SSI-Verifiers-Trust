@@ -7,12 +7,14 @@ import "./VerifyEventEmitter.sol";
 contract Verifier {
     address public owner;
     address public emitterAddress;
+    address public contractAddress;
 
     event VerifyViaTA(address, address);
 
     constructor(address _emitterAddress) {
         owner = msg.sender;
         emitterAddress = _emitterAddress;
+        contractAddress = address(this);
     }
 
     function verify(
@@ -22,7 +24,7 @@ contract Verifier {
     ) external onlyOwner {
         VerifyEventEmitter(emitterAddress).emitVerifyEvent(
             src,
-            address(this),
+            contractAddress,
             status,
             message
         );

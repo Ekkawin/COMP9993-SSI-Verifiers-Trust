@@ -16,8 +16,7 @@ import * as fs from "fs";
 // const prisma = new PrismaClient();
 
 async function main() {
-  // const concurrency = Number(process.argv.slice(2)[0]);
-  // console.log("con", concurrency);
+  const concurrency = Number(process.argv.slice(2)[0]);
   // const a = new Array(concurrency).fill(null).map((_, i) => i + 1);
   let good = 0;
   let bad = 0;
@@ -25,14 +24,14 @@ async function main() {
   const startTime = new Date();
   try {
     const t = await axios.post(
-      "http://localhost:3000/verify-trustanchor/0x5cfe05F1EFAaa63CeA30dA3f9Cf98b1D23b1e450"
+      "http://4.240.54.55/verify-trustanchor/0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"
     );
 
     const halfTime = new Date();
     const requestId = Number(t?.data?.requestId);
-    const u = await axios.post(`http://localhost:3001/verify/${requestId}`, {
-      holderWallet: "0xDfB7648432A4E1E1e5Bb3EA964E53E35cbDC7029",
-      issuerAddress: "0x5cDCC84473Bb9e7EacbC23B26c2fcdD02E9d5Fe3",
+    const u = await axios.post(`http://4.237.160.211/verify/${requestId}`, {
+      holderWallet: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      issuerAddress: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
       data: {
         type: "Buffer",
         data: [
@@ -75,16 +74,16 @@ async function main() {
     });
     const endTime = new Date();
     const stop = new Date().getTime() - startTime.getTime();
-    console.log("stop", stop);
+    // console.log("stop", stop);
     fs.appendFileSync(
-      "./result.txt",
-      `[${200}, ${halfTime.getTime() - startTime.getTime()}, ${
+      `./${concurrency}_result_1.txt`,
+      `[${concurrency}, ${halfTime.getTime() - startTime.getTime()}, ${
         endTime.getTime() - halfTime.getTime()
       }, ${stop}, 1]\n`
     );
   } catch (error) {
     console.log(error);
-    fs.appendFileSync("./result.txt", `[${200}, ${0}, 0, 0, 0]\n`);
+    fs.appendFileSync(`./${concurrency}_result_1.txt`, `[${concurrency}, ${0}, 0, 0, 0]\n`);
   }
 }
 

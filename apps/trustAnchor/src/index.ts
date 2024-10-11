@@ -87,7 +87,7 @@ app.listen(port, async () => {
     "TAVerify",
     (callerAddress, verifierAddress, status, message, _, _a) => {
       console.log(
-        `Event TAVerify Caller Address: ${callerAddress}, Verifier Address: ${verifierAddress}, Status: ${status}, Message: ${message}`
+        `Event TAVerify Caller Address: ${callerAddress}, Verifier Address: ${verifierAddress}, Status: ${status}, Message: ${message}, ${_}`
       );
     }
   );

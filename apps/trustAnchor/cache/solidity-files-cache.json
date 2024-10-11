@@ -38,8 +38,8 @@
       ]
     },
     "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/trustAnchor/contracts/TrustAnchor.sol": {
-      "lastModificationDate": 1728459827281,
-      "contentHash": "e945138b328289af6258051e3b5eaeea",
+      "lastModificationDate": 1728564943630,
+      "contentHash": "fea150374ee9887927a24b14713bb233",
       "sourceName": "contracts/TrustAnchor.sol",
       "solcConfig": {
         "version": "0.8.27",
@@ -112,8 +112,8 @@
       ]
     },
     "/Users/aek/Desktop/UNSW/term6/COMP9993/apps/trustAnchor/contracts/VerifyEventEmitter.sol": {
-      "lastModificationDate": 1728459827291,
-      "contentHash": "b74bebf0124a14a900f26df630e83710",
+      "lastModificationDate": 1728564059139,
+      "contentHash": "5512d3eb04ff1466f17ed909b79bc032",
       "sourceName": "contracts/VerifyEventEmitter.sol",
       "solcConfig": {
         "version": "0.8.27",

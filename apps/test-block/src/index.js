@@ -53,18 +53,17 @@ var fs = require("fs");
 // const prisma = new PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var good, bad, startTime, halfTime, u, endTime, stop_1, error_1;
+        var concurrency, startTime, halfTime, u, endTime, stop_1, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    good = 0;
-                    bad = 0;
+                    concurrency = Number(process.argv.slice(2)[0]);
                     startTime = new Date();
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
                     halfTime = new Date();
-                    return [4 /*yield*/, axios_1.default.post("http://localhost:3003/score", {
+                    return [4 /*yield*/, axios_1.default.post("http://4.240.54.55/score", {
                             holderWallet: "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
                             srcAddress: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
                             score: 1,
@@ -73,13 +72,13 @@ function main() {
                     u = _a.sent();
                     endTime = new Date();
                     stop_1 = new Date().getTime() - startTime.getTime();
-                    console.log("stop", stop_1);
-                    fs.appendFileSync("./result.txt", "[".concat(200, ", ").concat(halfTime.getTime() - startTime.getTime(), ", ").concat(endTime.getTime() - halfTime.getTime(), ", ").concat(stop_1, ", 1]\n"));
+                    // console.log("stop", stop);
+                    fs.appendFileSync("./".concat(concurrency, "_result.txt"), "[".concat(concurrency, ", ").concat(halfTime.getTime() - startTime.getTime(), ", ").concat(endTime.getTime() - halfTime.getTime(), ", ").concat(stop_1, ", 1]\n"));
                     return [3 /*break*/, 4];
                 case 3:
                     error_1 = _a.sent();
                     console.log(error_1);
-                    fs.appendFileSync("./result.txt", "[".concat(200, ", ").concat(0, ", 0, 0, 0]\n"));
+                    fs.appendFileSync("./".concat(concurrency, "_result.txt"), "[".concat(concurrency, ", ").concat(0, ", 0, 0, 0]\n"));
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }

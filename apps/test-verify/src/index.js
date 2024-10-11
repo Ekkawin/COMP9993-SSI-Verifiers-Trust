@@ -53,25 +53,26 @@ var fs = require("fs");
 // const prisma = new PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var good, bad, startTime, t, halfTime, requestId, u, endTime, stop_1, error_1;
+        var concurrency, good, bad, startTime, t, halfTime, requestId, u, endTime, stop_1, error_1;
         var _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
+                    concurrency = Number(process.argv.slice(2)[0]);
                     good = 0;
                     bad = 0;
                     startTime = new Date();
                     _b.label = 1;
                 case 1:
                     _b.trys.push([1, 4, , 5]);
-                    return [4 /*yield*/, axios_1.default.post("http://localhost:3000/verify-trustanchor/0x5cfe05F1EFAaa63CeA30dA3f9Cf98b1D23b1e450")];
+                    return [4 /*yield*/, axios_1.default.post("http://4.240.54.55/verify-trustanchor/0xa513E6E4b8f2a923D98304ec87F64353C4D5C853")];
                 case 2:
                     t = _b.sent();
                     halfTime = new Date();
                     requestId = Number((_a = t === null || t === void 0 ? void 0 : t.data) === null || _a === void 0 ? void 0 : _a.requestId);
-                    return [4 /*yield*/, axios_1.default.post("http://localhost:3001/verify/".concat(requestId), {
-                            holderWallet: "0xDfB7648432A4E1E1e5Bb3EA964E53E35cbDC7029",
-                            issuerAddress: "0x5cDCC84473Bb9e7EacbC23B26c2fcdD02E9d5Fe3",
+                    return [4 /*yield*/, axios_1.default.post("http://4.237.160.211/verify/".concat(requestId), {
+                            holderWallet: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+                            issuerAddress: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
                             data: {
                                 type: "Buffer",
                                 data: [
@@ -116,13 +117,13 @@ function main() {
                     u = _b.sent();
                     endTime = new Date();
                     stop_1 = new Date().getTime() - startTime.getTime();
-                    console.log("stop", stop_1);
-                    fs.appendFileSync("./result.txt", "[".concat(200, ", ").concat(halfTime.getTime() - startTime.getTime(), ", ").concat(endTime.getTime() - halfTime.getTime(), ", ").concat(stop_1, ", 1]\n"));
+                    // console.log("stop", stop);
+                    fs.appendFileSync("./".concat(concurrency, "_result_1.txt"), "[".concat(concurrency, ", ").concat(halfTime.getTime() - startTime.getTime(), ", ").concat(endTime.getTime() - halfTime.getTime(), ", ").concat(stop_1, ", 1]\n"));
                     return [3 /*break*/, 5];
                 case 4:
                     error_1 = _b.sent();
                     console.log(error_1);
-                    fs.appendFileSync("./result.txt", "[".concat(200, ", ").concat(0, ", 0, 0, 0]\n"));
+                    fs.appendFileSync("./".concat(concurrency, "_result_1.txt"), "[".concat(concurrency, ", ").concat(0, ", 0, 0, 0]\n"));
                     return [3 /*break*/, 5];
                 case 5: return [2 /*return*/];
             }
