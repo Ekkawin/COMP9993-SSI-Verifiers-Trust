@@ -24,7 +24,7 @@ async function main() {
   const startTime = new Date();
   try {
     const t = await axios.post(
-      "http://4.240.54.55/verify-trustanchor/0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"
+      "http://4.240.54.55/verify-trustanchor/0x0B306BF915C4d645ff596e518fAf3F9669b97016"
     );
 
     const halfTime = new Date();

@@ -65,7 +65,7 @@ function main() {
                     _b.label = 1;
                 case 1:
                     _b.trys.push([1, 4, , 5]);
-                    return [4 /*yield*/, axios_1.default.post("http://4.240.54.55/verify-trustanchor/0xa513E6E4b8f2a923D98304ec87F64353C4D5C853")];
+                    return [4 /*yield*/, axios_1.default.post("http://4.240.54.55/verify-trustanchor/0x0B306BF915C4d645ff596e518fAf3F9669b97016")];
                 case 2:
                     t = _b.sent();
                     halfTime = new Date();

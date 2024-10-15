@@ -50,11 +50,14 @@ app.post("/graph", async (req, res) => {
       },
     });
 
-    const nodes = await prisma.node.findMany({ orderBy: { address: "asc" } });
+    const nodes = await prisma.node.findMany({ orderBy: { address: "asc" }, select:{address:true,score:true} });
 
     const edges = await prisma.graphEdge.findMany({
       orderBy: { desAddress: "asc" },
     });
+
+    console.log(edges);
+    console.log(nodes);
 
     const nodeHash = crypto
       .createHash("sha256")
@@ -189,10 +192,14 @@ app.post("/score", async (req, res) => {
 });
 
 app.get("/graph", async (req, res) => {
-  const edges = await prisma.graphEdge.findMany({
-    orderBy: { desAddress: "asc" },
-  });
-  console.log(edges);
+  const nodes = await prisma.node.findMany({ orderBy: { address: "asc" }, select:{address:true,score:true} });
+
+    const edges = await prisma.graphEdge.findMany({
+      orderBy: { desAddress: "asc" },
+    });
+
+    console.log(edges);
+    console.log(nodes);
   const hash = crypto
     .createHash("sha256")
     .update(JSON.stringify(edges))
@@ -230,7 +237,7 @@ app.get("/merkletree/:id", async (req, res) => {
 });
 
 app.listen(port, async () => {
-  await prisma.graphEdge.deleteMany();
+  // await prisma.graphEdge.deleteMany();
   const platformAddresses = await prisma.platformContractAddress.findFirst();
   l1VerifierAddress = platformAddresses?.lVerifierAddress as string;
   verifierRegistryAddress =
