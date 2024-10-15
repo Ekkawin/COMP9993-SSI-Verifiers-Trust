@@ -3,10 +3,32 @@
 pragma solidity ^0.8.0;
 
 contract VerifyEventEmitter {
-    event TAVerify(address, address, string, string, address);
-    event Verify(address, string, string, address);
+    uint private eventNumber;
+    event TAVerify(
+        uint indexed eventNumber,
+        address holderAddress,
+        address verifierAddress,
+        string status,
+        string message,
+        address callerAddress
+    );
 
-    constructor() {}
+    event Verify(
+        uint indexed eventNumber,
+        address holderAddress,
+        string status,
+        string message,
+        address callerAddress
+    );
+
+    event GiveScore(
+        uint indexed eventNumber,
+        address callerAddress
+    );
+
+    constructor() {
+        eventNumber = 0;
+    }
 
     function emitTAEvent(
         address holder,
@@ -15,7 +37,8 @@ contract VerifyEventEmitter {
         string memory status,
         string memory message
     ) external {
-        emit TAVerify(holder, verifier, status, message, sender);
+        emit TAVerify(eventNumber, holder, verifier, status, message, sender);
+        eventNumber = eventNumber + 1;
     }
     function emitVerifyEvent(
         address holder,
@@ -23,6 +46,14 @@ contract VerifyEventEmitter {
         string memory status,
         string memory message
     ) external {
-        emit Verify(holder, status, message, sender);
+        emit Verify(eventNumber, holder, status, message, sender);
+        eventNumber = eventNumber + 1;
+    }
+
+    function emitScoringEvent(
+        uint _eventNumber,
+        address callerAddress
+    ) external {
+        emit GiveScore(_eventNumber, callerAddress);
     }
 }

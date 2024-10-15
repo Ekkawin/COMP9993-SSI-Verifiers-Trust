@@ -40,3 +40,9 @@ model Node {
   score   Int
   numberOfScorer   Int
 }
+
+model Event {
+  eventNumber Int @id
+  holderAddress String
+  hasClaimed Boolean
+}

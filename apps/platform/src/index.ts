@@ -50,7 +50,10 @@ app.post("/graph", async (req, res) => {
       },
     });
 
-    const nodes = await prisma.node.findMany({ orderBy: { address: "asc" }, select:{address:true,score:true} });
+    const nodes = await prisma.node.findMany({
+      orderBy: { address: "asc" },
+      select: { address: true, score: true },
+    });
 
     const edges = await prisma.graphEdge.findMany({
       orderBy: { desAddress: "asc" },
@@ -86,105 +89,89 @@ app.post("/score", async (req, res) => {
   const srcAddress = req?.body?.srcAddress;
   const holderWallet = req?.body?.holderWallet;
   const score = req?.body?.score || 0;
+  const eventNumber = req?.query?.eventNumber;
 
   const verifierRegistryContract = await ethers.getContractAt(
     "VerifierRegistry",
     verifierRegistryAddress
   );
 
-  // console.log("holderWallet", holderWallet);
-  // console.log("srcAddress", srcAddress);
   try {
     const contractType = await verifierRegistryContract.getContractType(
       srcAddress
     );
-    // console.log("contractType", contractType);
+    const owner = await verifierRegistryContract.getContractOwner(srcAddress);
 
     let from;
     let logs;
-    let hasRightToVote;
+
     const emitterContract = await ethers.getContractAt(
       "VerifyEventEmitter",
       emitterAddress
     );
+
+    if (owner.toLowerCase() !== holderWallet.toLowerCase())
+      throw new Error("unauthorized");
+    from = await emitterContract.filters.TAVerify(
+      eventNumber,
+      null,
+      null,
+      null
+    );
+    logs = (await emitterContract.queryFilter(from, 0)) as any[];
+
     switch (Number(contractType)) {
       case 2:
-        from = await emitterContract.filters.TAVerify(null, null, null, null);
+        from = await emitterContract.filters.TAVerify(
+          eventNumber,
+          null,
+          null,
+          null,
+          null,
+          null
+        );
         logs = (await emitterContract.queryFilter(from, 0)) as any[];
-        // console.log("logs", logs);
-        hasRightToVote = logs.some((a) => {
-          // console.log("a?.from", a?.from);
-          return (
-            String(a?.args[0]).toLowerCase() == holderWallet.toLowerCase() &&
-            srcAddress.toLowerCase() == String(a?.args[4]).toLowerCase()
-          );
-        });
         break;
       case 1:
-        from = await emitterContract.filters.Verify(null, null, null);
-        logs = (await emitterContract.queryFilter(from, 0)) as any[];
-        hasRightToVote = logs.some(
-          (a) =>
-            String(a?.args[0]).toLowerCase() == holderWallet.toLowerCase() &&
-            srcAddress.toLowerCase() == String(a?.args[3]).toLowerCase()
+        from = await emitterContract.filters.Verify(
+          eventNumber,
+          null,
+          null,
+          null,
+          null
         );
+        logs = (await emitterContract.queryFilter(from, 0)) as any[];
+
         break;
       default: {
         throw new Error("not register");
       }
     }
     if (!logs?.length) throw new Error("no reccord");
-    if (!hasRightToVote) throw new Error("user doesn't have right to vote");
 
-    const node = await prisma.node.findUnique({
-      where: { address: srcAddress },
+    const hasClaimed = await prisma.event.findUnique({
+      where: { eventNumber: Number(eventNumber) },
     });
-    if (node) {
-      const dominator = node?.numberOfScorer;
-      const _score = node?.score;
-      await prisma.node.update({
-        where: {
-          address: srcAddress,
-        },
-        data: {
-          score: Number((dominator * _score + score) / (dominator + 1)),
-          numberOfScorer: dominator + 1,
-        },
-      });
+
+    if (hasClaimed) {
+      throw new Error("Event is already claim");
     } else {
-      await prisma.node.create({
+      await prisma.event.create({
         data: {
-          address: srcAddress,
-          score,
-          numberOfScorer: 1,
+          eventNumber: Number(eventNumber),
+          holderAddress: holderWallet,
+          hasClaimed: true,
         },
       });
     }
 
-    const nodes = await prisma.node.findMany({ orderBy: { address: "asc" } });
+    await emitterContract.emitScoringEvent(Number(eventNumber), holderWallet);
 
-    const edges = await prisma.graphEdge.findMany({
-      orderBy: { desAddress: "asc" },
+    res.send({
+      eventNumber: Number(eventNumber),
+      holderAddress: holderWallet,
+      hasClaimed: true,
     });
-
-    const nodeHash = crypto
-      .createHash("sha256")
-      .update(JSON.stringify(nodes))
-      .digest("hex");
-
-    const edgeHash = crypto
-      .createHash("sha256")
-      .update(JSON.stringify(edges))
-      .digest("hex");
-
-    const hash = crypto
-      .createHash("sha256")
-      .update(edgeHash + nodeHash)
-      .digest("hex");
-
-    const graphContract = await ethers.getContractAt("Graph", graphAddress);
-    await graphContract.modifyGraphHash(hash);
-    res.send({ hash });
   } catch (_) {
     console.log(_);
     res.send(400);
@@ -192,14 +179,17 @@ app.post("/score", async (req, res) => {
 });
 
 app.get("/graph", async (req, res) => {
-  const nodes = await prisma.node.findMany({ orderBy: { address: "asc" }, select:{address:true,score:true} });
+  const nodes = await prisma.node.findMany({
+    orderBy: { address: "asc" },
+    select: { address: true, score: true },
+  });
 
-    const edges = await prisma.graphEdge.findMany({
-      orderBy: { desAddress: "asc" },
-    });
+  const edges = await prisma.graphEdge.findMany({
+    orderBy: { desAddress: "asc" },
+  });
 
-    console.log(edges);
-    console.log(nodes);
+  console.log(edges);
+  console.log(nodes);
   const hash = crypto
     .createHash("sha256")
     .update(JSON.stringify(edges))
@@ -246,6 +236,36 @@ app.listen(port, async () => {
   const issuerRegistryAddress =
     platformAddresses?.issuerRegistryAddress as string;
   emitterAddress = platformAddresses?.emitterAddress as string;
+
+  const emitterContract = await ethers.getContractAt(
+    "VerifyEventEmitter",
+    emitterAddress
+  );
+  // emitterContract.on(
+  //   "TAVerify",
+  //   async (eventNumber, holderAddress, verifierAddress, status, message, callerAddress) => {
+  //     console.log(
+  //       "eventNumber\n",
+  //       eventNumber,
+  //       "holderAddress\n",
+  //       holderAddress,
+  //       "verifierAddress\n",
+  //       verifierAddress,
+  //       "status\n",
+  //       status,
+  //       "message\n",
+  //       message,
+  //       "callerAddress\n",
+  //       callerAddress
+  //     );
+  //   }
+  // );
+
+  emitterContract.on("GiveScore", (eventNumber, address) => {
+    console.log(
+      `GiveScore EventNumber: ${Number(eventNumber)}\n Address: ${address}`
+    );
+  });
 
   const L1VerifierRegistryContract = await ethers.getContractAt(
     "L1VerifierRegistry",
