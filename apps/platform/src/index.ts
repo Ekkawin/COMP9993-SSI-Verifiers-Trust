@@ -227,7 +227,8 @@ app.get("/merkletree/:id", async (req, res) => {
 });
 
 app.listen(port, async () => {
-  // await prisma.graphEdge.deleteMany();
+  await prisma.graphEdge.deleteMany();
+  await prisma.event.deleteMany();
   const platformAddresses = await prisma.platformContractAddress.findFirst();
   l1VerifierAddress = platformAddresses?.lVerifierAddress as string;
   verifierRegistryAddress =
