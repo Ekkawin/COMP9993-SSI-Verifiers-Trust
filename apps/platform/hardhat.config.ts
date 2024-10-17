@@ -7,7 +7,7 @@ module.exports = {
       hardhat: {
       },
     test:{
-      url: "149.28.176.241"
+      url: "http://149.28.176.241"
      // url: "http://45.76.124.221"
     },
     sepolia: {
