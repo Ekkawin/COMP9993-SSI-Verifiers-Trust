@@ -2,12 +2,12 @@ import "@nomicfoundation/hardhat-ethers";
 import { url } from "inspector";
 
 module.exports = {
-    defaultNetwork: "localhost",
+    defaultNetwork: "test",
     networks: {
       hardhat: {
       },
     test:{
-      url: "http://20.193.133.12"
+      url: "149.28.176.241"
      // url: "http://45.76.124.221"
     },
     sepolia: {
