@@ -165,7 +165,7 @@ app.post("/score", async (req, res) => {
       });
     }
 
-    await emitterContract.emitScoringEvent(Number(eventNumber), holderWallet);
+    // await emitterContract.emitScoringEvent(Number(eventNumber), holderWallet);
 
     res.send({
       eventNumber: Number(eventNumber),
