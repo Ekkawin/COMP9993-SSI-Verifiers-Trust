@@ -85,9 +85,9 @@ app.listen(port, async () => {
 
   emitterContract.on(
     "TAVerify",
-    (callerAddress, verifierAddress, status, message, _, _a) => {
+    (eventNumber, holderAddress, verifierAddress, status, message, callerAddress) => {
       console.log(
-        `Event TAVerify Caller Address: ${callerAddress}, Verifier Address: ${verifierAddress}, Status: ${status}, Message: ${message}, ${_}`
+        `Event TAVerify Event Number ${eventNumber} Caller Address: ${callerAddress}, Verifier Address: ${verifierAddress}, Status: ${status}, Message: ${message} holderAddress: ${holderAddress}`
       );
     }
   );
