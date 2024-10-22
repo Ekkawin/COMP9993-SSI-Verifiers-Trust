@@ -21,7 +21,7 @@ app.post("/verify-request", async (req: any, res: any) => {
   const verifierAddress = req.body?.verifierAddress;
   requestors = { ...requestors, [id]: verifierAddress };
 
-  res.send({ message: `Your tracsaction is ${id}`, requestId:id });
+  res.send({ message: `Your tracsaction is ${id}`, requestId: id });
 });
 
 app.post("/verify/:id", async (req: any, res: any) => {
@@ -32,37 +32,40 @@ app.post("/verify/:id", async (req: any, res: any) => {
   const holderWallet = data?.holderWallet;
   const verifierAddress = requestors[id];
 
-  
+  try {
+    const issuerRegistryContract = await ethers.getContractAt(
+      "IssuerRegistry",
+      issuerRegisterAddress
+    );
+    const publicKey = await issuerRegistryContract.getSignature(issuerAddress);
 
-  const issuerRegistryContract = await ethers.getContractAt(
-    "IssuerRegistry",
-    issuerRegisterAddress
-  );
-  const publicKey = await issuerRegistryContract.getSignature(issuerAddress);
+    const result = await verifySignature({
+      issuerRegistryAddress: issuerRegisterAddress,
+      issuerAddress,
+      issuerSignature: publicKey,
+    });
+    console.log("result", result);
 
-  const result = await verifySignature({
-    issuerRegistryAddress: issuerRegisterAddress,
-    issuerAddress,
-    issuerSignature: publicKey,
-  });
-  console.log("result",result)
+    // await verifyContext(publicKey, Buffer.from(data?.data))
 
-  // await verifyContext(publicKey, Buffer.from(data?.data))
+    // Emit result
+    const trustAnchorContract = await ethers.getContractAt(
+      "TrustAnchor",
+      trustanchorAddress
+    );
 
-  // Emit result
-  const trustAnchorContract = await ethers.getContractAt(
-    "TrustAnchor",
-    trustanchorAddress
-  );
+    const tx = await trustAnchorContract.verify(
+      holderWallet || nullAddress,
+      verifierAddress || nullAddress,
+      "200",
+      `${result}`
+    );
 
-  const tx = await trustAnchorContract.verify(
-    holderWallet || nullAddress,
-    verifierAddress || nullAddress,
-    "200",
-    `${result}`
-  );
-
-  res.send(tx);
+    res.send(tx);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(400);
+  }
 });
 
 app.listen(port, async () => {
@@ -73,26 +76,34 @@ app.listen(port, async () => {
   console.log("ver regis addr", issReAddr);
   issuerRegisterAddress = issReAddr;
 
-  console.log("emitterAddress",emitterAddress)
+  console.log("emitterAddress", emitterAddress);
 
   // const trustanchorContract = await ethers.deployContract("TrustAnchor", trustanchorContract1);
   const trustanchorContract1 = await ethers.getContractFactory("TrustAnchor");
-  const trustanchorContract = await trustanchorContract1.deploy(emitterAddress)
+  const trustanchorContract = await trustanchorContract1.deploy(emitterAddress);
   trustanchorAddress = String(trustanchorContract?.target);
   console.log("Deploy Trust Anchor with Address", trustanchorAddress);
 
-  const emitterContract = await ethers.getContractAt("VerifyEventEmitter", emitterAddress)
+  const emitterContract = await ethers.getContractAt(
+    "VerifyEventEmitter",
+    emitterAddress
+  );
 
   emitterContract.on(
     "TAVerify",
-    (eventNumber, holderAddress, verifierAddress, status, message, callerAddress) => {
+    (
+      eventNumber,
+      holderAddress,
+      verifierAddress,
+      status,
+      message,
+      callerAddress
+    ) => {
       console.log(
         `Event TAVerify Event Number ${eventNumber} Caller Address: ${callerAddress}, Verifier Address: ${verifierAddress}, Status: ${status}, Message: ${message} holderAddress: ${holderAddress}`
       );
     }
   );
-
-  
 
   const verifierRegistryContract = await ethers.getContractAt(
     "VerifierRegistry",
