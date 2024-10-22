@@ -148,6 +148,7 @@ app.post("/score", async (req, res) => {
       }
     }
     if (!logs?.length) throw new Error("no reccord");
+    console.log(logs)
 
     const hasClaimed = await prisma.event.findUnique({
       where: { eventNumber: Number(eventNumber) },
