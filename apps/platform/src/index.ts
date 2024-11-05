@@ -40,47 +40,84 @@ app.post("/add-root", async (req, res) => {
 app.post("/graph", async (req, res) => {
   const srcAddress = req?.body?.srcAddress;
   const desAddress = req?.body?.desAddress;
+  const holderWallet = req?.body?.holderWallet;
 
   // TODO: check the correcteness of forming a graph
   try {
+    const verifierRegistryContract = await ethers.getContractAt(
+      "VerifierRegistry",
+      verifierRegistryAddress
+    );
+
+    const eventEmitterContract = await ethers.getContractAt(
+      "VerifyEventEmitter",
+      emitterAddress
+    );
+
+    const srcContractType = await verifierRegistryContract.getContractType(
+      srcAddress
+    );
+    const desContractType = await verifierRegistryContract.getContractType(
+      desAddress
+    );
+    const owner = await verifierRegistryContract.getContractOwner(srcAddress);
+
+    if (owner.toLowerCase() !== holderWallet.toLowerCase()) {
+      throw new Error("unauthorized");
+    }
+
+    if (Number(srcContractType) === 2) {
+      throw new Error("VSP can not be trustor");
+    }
+
+    if (Number(srcContractType) === 1 && Number(desContractType) !== 2) {
+      throw new Error("Verifier can not be trustor if VSP is the trustee");
+    }
+
     const x = await prisma.graphEdge.create({
       data: {
         srcAddress,
         desAddress,
       },
     });
+    await eventEmitterContract.emitUpdateGraphEvent(
+      srcAddress,
+      desAddress,
+      holderWallet
+    );
 
-    const nodes = await prisma.node.findMany({
-      orderBy: { address: "asc" },
-      select: { address: true, score: true },
-    });
+    // const nodes = await prisma.node.findMany({
+    //   orderBy: { address: "asc" },
+    //   select: { address: true, score: true },
+    // });
 
-    const edges = await prisma.graphEdge.findMany({
-      orderBy: { desAddress: "asc" },
-    });
+    // const edges = await prisma.graphEdge.findMany({
+    //   orderBy: { desAddress: "asc" },
+    // });
 
-    console.log(edges);
-    console.log(nodes);
+    // console.log(edges);
+    // console.log(nodes);
 
-    const nodeHash = crypto
-      .createHash("sha256")
-      .update(JSON.stringify(nodes))
-      .digest("hex");
+    // const nodeHash = crypto
+    //   .createHash("sha256")
+    //   .update(JSON.stringify(nodes))
+    //   .digest("hex");
 
-    const edgeHash = crypto
-      .createHash("sha256")
-      .update(JSON.stringify(edges))
-      .digest("hex");
+    // const edgeHash = crypto
+    //   .createHash("sha256")
+    //   .update(JSON.stringify(edges))
+    //   .digest("hex");
 
-    const hash = crypto
-      .createHash("sha256")
-      .update(edgeHash + nodeHash)
-      .digest("hex");
+    // const hash = crypto
+    //   .createHash("sha256")
+    //   .update(edgeHash + nodeHash)
+    //   .digest("hex");
 
-    const graphContract = await ethers.getContractAt("Graph", graphAddress);
-    await graphContract.modifyGraphHash(hash);
-    res.send({ hash });
-  } catch (_) {
+    // const graphContract = await ethers.getContractAt("Graph", graphAddress);
+    // await graphContract.modifyGraphHash(hash);
+    res.send(200);
+  } catch (err) {
+    console.error(err);
     res.send(400);
   }
 });

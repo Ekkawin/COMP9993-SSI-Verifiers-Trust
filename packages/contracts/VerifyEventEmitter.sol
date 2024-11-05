@@ -4,6 +4,13 @@ pragma solidity ^0.8.0;
 
 contract VerifyEventEmitter {
     uint private eventNumber;
+
+    event UpdateGraph(
+        address indexed srcAddress,
+        address indexed desAddress,
+        address callerAddress
+    );
+
     event TAVerify(
         uint indexed eventNumber,
         address holderAddress,
@@ -30,6 +37,13 @@ contract VerifyEventEmitter {
         eventNumber = 0;
     }
 
+    function emitUpdateGraphEvent(
+        address srcAddress,
+        address desAddress,
+        address callerAddress
+    ) external {
+        emit UpdateGraph(srcAddress, desAddress, callerAddress);
+    }
     function emitTAEvent(
         address holder,
         address verifier,
