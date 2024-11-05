@@ -8,7 +8,7 @@ module.exports = {
       },
     test:{
       //url: "http://149.28.176.241"
-      url: "http://20.198.50.8"
+      url: "http://20.197.14.240"
     },
     sepolia: {
       url: "https://rpc.sepolia.org",
