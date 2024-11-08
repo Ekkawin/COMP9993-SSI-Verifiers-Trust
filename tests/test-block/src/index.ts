@@ -17,15 +17,16 @@ import * as fs from "fs";
 
 async function main() {
   const concurrency = Number(process.argv.slice(2)[0]);
+  const id = Number(process.argv.slice(2)[1]);
 
   const startTime = new Date();
   try {
     const halfTime = new Date();
     const u = await axios.post(
-      `http://4.240.54.55/score`,
+      `http://20.40.47.79/score?eventNumber=${id}`,
       {
-        holderWallet: "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
-        srcAddress: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+        holderWallet: "0x646aAC94a702628e15a267FB52e5b9C6705EA566",
+        srcAddress: "0x41b4fE4F568A39dcebEea642e66Ce0c2727bD1DF",
         score: 1,
       },
       { timeout: 100000 }
@@ -34,15 +35,15 @@ async function main() {
     const stop = new Date().getTime() - startTime.getTime();
     // console.log("stop", stop);
     fs.appendFileSync(
-      `./${concurrency}_result.txt`,
+      `./${concurrency}_result_ganache.txt`,
       `[${concurrency}, ${halfTime.getTime() - startTime.getTime()}, ${
         endTime.getTime() - halfTime.getTime()
       }, ${stop}, 1]\n`
     );
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     fs.appendFileSync(
-      `./${concurrency}_result.txt`,
+      `./${concurrency}_result_ganache.txt`,
       `[${concurrency}, ${0}, 0, 0, 0]\n`
     );
   }

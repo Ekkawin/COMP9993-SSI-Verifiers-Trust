@@ -16,20 +16,28 @@ async function main() {
       taIndex
     ];
 
-    const x = await axios.post("http://4.240.54.55/graph", {
-      srcAddress: verifierData,
-      desAddress: taData,
-    });
+    const x = await axios.post(
+      "http://20.197.15.71/graph",
+      {
+        srcAddress: verifierData,
+        desAddress: taData,
+        holderWallet: "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+      },
+      { timeout: 100000 }
+    );
     const end = new Date();
 
-    fs.appendFileSync(`./${concurrency}_result.txt`, `${end.getTime() - start.getTime()}\n`);
+    fs.appendFileSync(
+      `./${concurrency}_result_Hardhat.txt`,
+      `Hardhat, ${end.getTime() - start.getTime()}\n`
+    );
     // console.log("x",x)
 
     // console.log(verifierData, "\n", taData);
     // console.log(taData.split("\n")[99]);
   } catch (e) {
-    console.log(e);
-    fs.appendFileSync(`./${concurrency}_result.txt`, `0\n`);
+    // console.log(e);
+    fs.appendFileSync(`./${concurrency}_result_Hardhat.txt`, `Hardhat, 0\n`);
   }
 }
 

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-for i in {1..500}
-do 
+
+for ((i=1; i<=$1; i++)); do 
 # echo "hi"
-  node src/index.js 500 &
+  node src/index.js $1 $i &
 done
 wait

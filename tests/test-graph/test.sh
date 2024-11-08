@@ -1,10 +1,10 @@
 #!/bin/bash
 
-for i in {1..50}
+for i in {1..10}
 do 
-for j in {1..10}
+for j in {1..70}
 do
-node src/index.js $i $j 500 &
+node src/index.js $i $j 700 &
 done
 done
 wait

@@ -54,19 +54,20 @@ function main() {
                     _a.trys.push([1, 3, , 4]);
                     verifierData = fs.readFileSync("./verifier.txt", "utf-8").split("\n")[verifierIndex];
                     taData = fs.readFileSync("./trustanchor.txt", "utf-8").split("\n")[taIndex];
-                    return [4 /*yield*/, axios_1.default.post("http://4.240.54.55/graph", {
+                    return [4 /*yield*/, axios_1.default.post("http://20.197.15.71/graph", {
                             srcAddress: verifierData,
                             desAddress: taData,
-                        })];
+                            holderWallet: "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+                        }, { timeout: 100000 })];
                 case 2:
                     x = _a.sent();
                     end = new Date();
-                    fs.appendFileSync("./".concat(concurrency, "_result.txt"), "".concat(end.getTime() - start.getTime(), "\n"));
+                    fs.appendFileSync("./".concat(concurrency, "_result_Hardhat.txt"), "Hardhat, ".concat(end.getTime() - start.getTime(), "\n"));
                     return [3 /*break*/, 4];
                 case 3:
                     e_1 = _a.sent();
-                    console.log(e_1);
-                    fs.appendFileSync("./".concat(concurrency, "_result.txt"), "0\n");
+                    // console.log(e);
+                    fs.appendFileSync("./".concat(concurrency, "_result_Hardhat.txt"), "Hardhat, 0\n");
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
