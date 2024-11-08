@@ -2,7 +2,7 @@ import "@nomicfoundation/hardhat-ethers";
 import { url } from "inspector";
 
 module.exports = {
-    defaultNetwork: "test",
+    defaultNetwork: "localhost",
     networks: {
       hardhat: {
       },

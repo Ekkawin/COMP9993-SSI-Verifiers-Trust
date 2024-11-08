@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "trustanchor",
+  "name": "vsp",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -33,7 +33,7 @@
     "web3-types": "^1.8.0"
   },
   "scripts": {
-    "dev:trustanchor": "sh prescript.sh && tsnd --respawn src/index.ts",
+    "dev:vsp": "sh prescript.sh && tsnd --respawn src/index.ts",
     "dev2": "tsnd --respawn src/index.ts",
     "generate": "npx prisma generate"
   }

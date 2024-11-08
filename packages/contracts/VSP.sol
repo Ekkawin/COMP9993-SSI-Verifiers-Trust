@@ -3,7 +3,7 @@
 pragma solidity ^0.8.0;
 import "./VerifyEventEmitter.sol";
 
-contract TrustAnchor {
+contract VSP {
     address public owner;
     address public emitterAddress;
     address public contractAddress;
@@ -20,7 +20,7 @@ contract TrustAnchor {
         string memory status,
         string memory message
     ) external onlyOwner {
-        VerifyEventEmitter(emitterAddress).emitTAEvent(
+        VerifyEventEmitter(emitterAddress).emitVSPEvent(
             holder,
             verifier,
             contractAddress,

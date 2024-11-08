@@ -11,7 +11,7 @@ contract VerifyEventEmitter {
         address callerAddress
     );
 
-    event TAVerify(
+    event VSPVerify(
         uint indexed eventNumber,
         address holderAddress,
         address verifierAddress,
@@ -44,14 +44,14 @@ contract VerifyEventEmitter {
     ) external {
         emit UpdateGraph(srcAddress, desAddress, callerAddress);
     }
-    function emitTAEvent(
+    function emitVSPEvent(
         address holder,
         address verifier,
         address sender,
         string memory status,
         string memory message
     ) external {
-        emit TAVerify(eventNumber, holder, verifier, status, message, sender);
+        emit VSPVerify(eventNumber, holder, verifier, status, message, sender);
         eventNumber = eventNumber + 1;
     }
     function emitVerifyEvent(

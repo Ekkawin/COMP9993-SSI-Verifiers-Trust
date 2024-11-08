@@ -36,6 +36,7 @@
     "migration": "npx prisma migrate dev --name ",
     "dev3": "ts-node src/dev.ts",
     "dev:node": "npx hardhat node",
-    "generate": "npx prisma generate"
+    "generate": "npx prisma generate",
+    "dev:platform": "sh prescript.sh && ts-node src/dev.ts && ts-node src/index.ts"
   }
 }

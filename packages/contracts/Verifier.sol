@@ -9,7 +9,7 @@ contract Verifier {
     address public emitterAddress;
     address public contractAddress;
 
-    event VerifyViaTA(address, address);
+    event VerifyViaVSP(address, address);
 
     constructor(address _emitterAddress) {
         owner = msg.sender;
@@ -30,8 +30,8 @@ contract Verifier {
         );
     }
 
-    function verifyViaTa(address src, address ta) external onlyOwner {
-        emit VerifyViaTA(src, ta);
+    function verifyViaVSP(address src, address ta) external onlyOwner {
+        emit VerifyViaVSP(src, ta);
     }
 
     modifier onlyOwner() {

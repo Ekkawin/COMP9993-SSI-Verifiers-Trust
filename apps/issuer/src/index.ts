@@ -51,6 +51,7 @@ app.listen(port, async () => {
     "IssuerRegistry",
     address
   );
+  console.log("key", pubKey)
 
   const tx = await issuerRegistryContract.addSignature(issuerAddress, pubKey);
 

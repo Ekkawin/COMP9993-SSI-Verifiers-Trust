@@ -34,7 +34,7 @@
       "cache": false,
       "persistent": true
     },
-    "dev:trustanchor": {
+    "dev:vsp": {
       "cache": false,
       "persistent": true
     },
@@ -51,6 +51,10 @@
       "persistent": true
     },
     "dev:node": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev:platform": {
       "cache": false,
       "persistent": true
     },

@@ -36,7 +36,7 @@ async function main() {
   });
   a.map(async () => {
     try{
-    const _trustAnchorContract = await ethers.getContractFactory("TrustAnchor");
+    const _trustAnchorContract = await ethers.getContractFactory("VSP");
     const trustanchorAddress = await _trustAnchorContract.deploy(emitterAddress);
     const verifierRegistryContract = await ethers.getContractAt(
       "VerifierRegistry",

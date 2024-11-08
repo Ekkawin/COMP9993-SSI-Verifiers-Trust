@@ -50,7 +50,7 @@ app.post("/verify/:id", async (req: any, res: any) => {
 
     // Emit result
     const trustAnchorContract = await ethers.getContractAt(
-      "TrustAnchor",
+      "VSP",
       trustanchorAddress
     );
 
@@ -79,10 +79,10 @@ app.listen(port, async () => {
   console.log("emitterAddress", emitterAddress);
 
   // const trustanchorContract = await ethers.deployContract("TrustAnchor", trustanchorContract1);
-  const trustanchorContract1 = await ethers.getContractFactory("TrustAnchor");
+  const trustanchorContract1 = await ethers.getContractFactory("VSP");
   const trustanchorContract = await trustanchorContract1.deploy(emitterAddress);
   trustanchorAddress = String(trustanchorContract?.target);
-  console.log("Deploy Trust Anchor with Address", trustanchorAddress);
+  console.log("Deploy Verification Service Provider with Address", trustanchorAddress);
 
   const emitterContract = await ethers.getContractAt(
     "VerifyEventEmitter",
@@ -90,7 +90,7 @@ app.listen(port, async () => {
   );
 
   emitterContract.on(
-    "TAVerify",
+    "VSPVerify",
     (
       eventNumber,
       holderAddress,
@@ -100,7 +100,7 @@ app.listen(port, async () => {
       callerAddress
     ) => {
       console.log(
-        `Event TAVerify Event Number ${eventNumber} Caller Address: ${callerAddress}, Verifier Address: ${verifierAddress}, Status: ${status}, Message: ${message} holderAddress: ${holderAddress}`
+        `Event VSPVerify Event Number ${eventNumber} Caller Address: ${callerAddress}, Verifier Address: ${verifierAddress}, Status: ${status}, Message: ${message} holderAddress: ${holderAddress}`
       );
     }
   );
@@ -115,5 +115,5 @@ app.listen(port, async () => {
     2
   );
 
-  console.log(`Example app listening on port ${port}`);
+
 });

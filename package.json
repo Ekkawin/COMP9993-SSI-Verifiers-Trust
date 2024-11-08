@@ -15,11 +15,12 @@
     "dev-individual": "turbo run dev:verifier --parallel",
     "dev2": "turbo run dev2 ",
     "dev:verifier": "turbo run dev:verifier",
-    "dev:trustanchor": "turbo run dev:trustanchor",
+    "dev:vsp": "turbo run dev:vsp",
     "dev:issuer": "turbo run dev:issuer",
     "migration": "turbo run migration",
     "generate": "turbo run generate",
     "test:verify": "turbo run test:verify",
-    "dev:node": "turbo run dev:node"
+    "dev:blockchain": "turbo run dev:node",
+    "dev:platform": "turbo run dev:platform"
   }
 }
