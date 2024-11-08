@@ -19,6 +19,8 @@ tests/*/cache*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 *result*.txt
+trustanchor.txt
+verifier.txt
 
 # Runtime data
 pids
