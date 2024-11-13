@@ -55,5 +55,5 @@ app.listen(port, async () => {
 
   const tx = await issuerRegistryContract.addSignature(issuerAddress, pubKey);
 
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Issuer app listening on port ${port}`);
 });

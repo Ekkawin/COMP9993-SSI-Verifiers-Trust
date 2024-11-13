@@ -101,5 +101,5 @@ app.listen(port, async () => {
     1
   );
 
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Verifier app listening on port ${port}`);
 });

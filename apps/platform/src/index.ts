@@ -63,7 +63,7 @@ app.post("/graph", async (req, res) => {
     if (Number(srcContractType) != 0) {
       const owner = await verifierRegistryContract.getContractOwner(srcAddress);
 
-      console.log(owner);
+      // console.log(owner);
 
       if (owner.toLowerCase() !== holderWallet.toLowerCase()) {
         throw new Error("unauthorized");
@@ -135,7 +135,7 @@ app.post("/score", async (req, res) => {
       "VerifyEventEmitter",
       emitterAddress
     );
-    console.log(contractType);
+    // console.log(contractType);
 
     from = await emitterContract.filters.VSPVerify(
       eventNumber,
@@ -173,7 +173,7 @@ app.post("/score", async (req, res) => {
       }
     }
     if (!logs?.length) throw new Error("no reccord");
-    console.log(logs[0]?.args[1].toLowerCase());
+    // console.log(logs[0]?.args[1].toLowerCase());
     if (logs[0]?.args[1].toLowerCase() !== holderWallet.toLowerCase()) {
       throw new Error("unauthorized");
     }
@@ -308,7 +308,7 @@ app.listen(port, async () => {
     "VerifyEventEmitter",
     emitterAddress
   );
-  
+
   // emitterContract.on(
   //   "TAVerify",
   //   async (eventNumber, holderAddress, verifierAddress, status, message, callerAddress) => {

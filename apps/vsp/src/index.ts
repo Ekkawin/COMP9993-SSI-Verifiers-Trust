@@ -12,6 +12,7 @@ app.use(bodyParser.json()); // handle json data
 
 let issuerRegisterAddress: string;
 let trustanchorAddress: string;
+let currentEventID: number;
 
 let requestors: any = {};
 
@@ -38,6 +39,7 @@ app.post("/verify/:id", async (req: any, res: any) => {
       issuerRegisterAddress
     );
     const publicKey = await issuerRegistryContract.getSignature(issuerAddress);
+    console.log(publicKey);
 
     const result = await verifySignature({
       issuerRegistryAddress: issuerRegisterAddress,
@@ -53,15 +55,20 @@ app.post("/verify/:id", async (req: any, res: any) => {
       "VSP",
       trustanchorAddress
     );
+    let eventID = currentEventID;
 
-    const tx = await trustAnchorContract.verify(
+    const transaction = await trustAnchorContract.verify(
       holderWallet || nullAddress,
       verifierAddress || nullAddress,
       "200",
       `${result}`
     );
+    while (eventID == currentEventID) {
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    
 
-    res.send(tx);
+    res.send({ status: 200, message: {eventID: Number(currentEventID)} });
   } catch (err) {
     console.error(err);
     res.sendStatus(400);
@@ -82,7 +89,10 @@ app.listen(port, async () => {
   const trustanchorContract1 = await ethers.getContractFactory("VSP");
   const trustanchorContract = await trustanchorContract1.deploy(emitterAddress);
   trustanchorAddress = String(trustanchorContract?.target);
-  console.log("Deploy Verification Service Provider with Address", trustanchorAddress);
+  console.log(
+    "Deploy Verification Service Provider with Address",
+    trustanchorAddress
+  );
 
   const emitterContract = await ethers.getContractAt(
     "VerifyEventEmitter",
@@ -99,6 +109,7 @@ app.listen(port, async () => {
       message,
       callerAddress
     ) => {
+      currentEventID = eventNumber;
       console.log(
         `Event VSPVerify Event Number ${eventNumber} Caller Address: ${callerAddress}, Verifier Address: ${verifierAddress}, Status: ${status}, Message: ${message} holderAddress: ${holderAddress}`
       );
@@ -114,6 +125,4 @@ app.listen(port, async () => {
     trustanchorAddress,
     2
   );
-
-
 });
