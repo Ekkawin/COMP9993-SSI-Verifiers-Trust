@@ -1,7 +1,7 @@
 import "@nomicfoundation/hardhat-ethers";
 
 module.exports = {
-    defaultNetwork: "http://20.193.133.12",
+    defaultNetwork: "localhost",
     networks: {
       hardhat: {
       },

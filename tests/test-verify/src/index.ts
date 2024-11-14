@@ -36,18 +36,18 @@ async function main() {
     const endTime = new Date();
     const stop = new Date().getTime() - startTime.getTime();
     // console.log("stop", stop);
-    // fs.appendFileSync(
-    //   `./${concurrency}_result_ganache.txt`,
-    //   `[${concurrency}, ${halfTime.getTime() - startTime.getTime()}, ${
-    //     endTime.getTime() - halfTime.getTime()
-    //   }, ${stop}, 1]\n`
-    // );
+    fs.appendFileSync(
+      `./${concurrency}_result_ganache_1.txt`,
+      `[${concurrency}, ${halfTime.getTime() - startTime.getTime()}, ${
+        endTime.getTime() - halfTime.getTime()
+      }, ${stop}, 1]\n`
+    );
   } catch (error) {
     // console.log(error);
-    // fs.appendFileSync(
-    //   `./${concurrency}_result_ganache.txt`,
-    //   `[${concurrency}, ${0}, 0, 0, 0]\n`
-    // );
+    fs.appendFileSync(
+      `./${concurrency}_result_ganache_1.txt`,
+      `[${concurrency}, ${0}, 0, 0, 0]\n`
+    );
   }
 }
 

@@ -64,7 +64,7 @@ function main() {
                 case 1:
                     _a.trys.push([1, 3, , 4]);
                     halfTime = new Date();
-                    return [4 /*yield*/, axios_1.default.post("http://20.40.47.79/score?eventNumber=".concat(id), {
+                    return [4 /*yield*/, axios_1.default.post("http://localhost:3003/score?eventNumber=".concat(id), {
                             holderWallet: "0x646aAC94a702628e15a267FB52e5b9C6705EA566",
                             srcAddress: "0x41b4fE4F568A39dcebEea642e66Ce0c2727bD1DF",
                             score: 1,
@@ -74,12 +74,12 @@ function main() {
                     endTime = new Date();
                     stop_1 = new Date().getTime() - startTime.getTime();
                     // console.log("stop", stop);
-                    fs.appendFileSync("./".concat(concurrency, "_result_ganache.txt"), "[".concat(concurrency, ", ").concat(halfTime.getTime() - startTime.getTime(), ", ").concat(endTime.getTime() - halfTime.getTime(), ", ").concat(stop_1, ", 1]\n"));
+                    fs.appendFileSync("./".concat(concurrency, "_result_ganache_test.txt"), "[".concat(concurrency, ", ").concat(halfTime.getTime() - startTime.getTime(), ", ").concat(endTime.getTime() - halfTime.getTime(), ", ").concat(stop_1, ", 1]\n"));
                     return [3 /*break*/, 4];
                 case 3:
                     error_1 = _a.sent();
                     // console.log(error);
-                    fs.appendFileSync("./".concat(concurrency, "_result_ganache.txt"), "[".concat(concurrency, ", ").concat(0, ", 0, 0, 0]\n"));
+                    fs.appendFileSync("./".concat(concurrency, "_result_ganache_test.txt"), "[".concat(concurrency, ", ").concat(0, ", 0, 0, 0]\n"));
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }

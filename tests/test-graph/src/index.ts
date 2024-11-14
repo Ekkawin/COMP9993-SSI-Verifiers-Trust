@@ -17,7 +17,7 @@ async function main() {
     ];
 
     const x = await axios.post(
-      "http://20.197.15.71/graph",
+      "http://localhost:3003/graph",
       {
         srcAddress: verifierData,
         desAddress: taData,
@@ -28,7 +28,7 @@ async function main() {
     const end = new Date();
 
     fs.appendFileSync(
-      `./${concurrency}_result_Hardhat.txt`,
+      `./${concurrency}_result_Hardhat_test.txt`,
       `Hardhat, ${end.getTime() - start.getTime()}\n`
     );
     // console.log("x",x)
@@ -37,7 +37,7 @@ async function main() {
     // console.log(taData.split("\n")[99]);
   } catch (e) {
     // console.log(e);
-    fs.appendFileSync(`./${concurrency}_result_Hardhat.txt`, `Hardhat, 0\n`);
+    fs.appendFileSync(`./${concurrency}_result_Hardhat_test.txt`, `Hardhat, 0\n`);
   }
 }
 

@@ -23,7 +23,7 @@ async function main() {
   try {
     const halfTime = new Date();
     const u = await axios.post(
-      `http://20.40.47.79/score?eventNumber=${id}`,
+      `http://localhost:3003/score?eventNumber=${id}`,
       {
         holderWallet: "0x646aAC94a702628e15a267FB52e5b9C6705EA566",
         srcAddress: "0x41b4fE4F568A39dcebEea642e66Ce0c2727bD1DF",
@@ -35,7 +35,7 @@ async function main() {
     const stop = new Date().getTime() - startTime.getTime();
     // console.log("stop", stop);
     fs.appendFileSync(
-      `./${concurrency}_result_ganache.txt`,
+      `./${concurrency}_result_ganache_test.txt`,
       `[${concurrency}, ${halfTime.getTime() - startTime.getTime()}, ${
         endTime.getTime() - halfTime.getTime()
       }, ${stop}, 1]\n`
@@ -43,7 +43,7 @@ async function main() {
   } catch (error) {
     // console.log(error);
     fs.appendFileSync(
-      `./${concurrency}_result_ganache.txt`,
+      `./${concurrency}_result_ganache_test.txt`,
       `[${concurrency}, ${0}, 0, 0, 0]\n`
     );
   }

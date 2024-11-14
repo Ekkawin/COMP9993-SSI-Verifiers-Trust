@@ -10,9 +10,9 @@ async function main() {
   // const [verifierRegisAddres, issReAddr, _, _a, emitterAddress] =
   //   data.split("\n");
   // console.log(verifierRegisAddres);
-  const verifierRegisAddres = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
-  const emitterAddress = "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
-  const a = new Array(100).fill(null).map((_, i) => i + 1);
+  const verifierRegisAddres = "0xc752A6c823CC206C394389200eB34C07EaaDc03d"
+  const emitterAddress = "0x67CCFa83C0740Ea57C2552cb3a2f06bffE291D30"
+  const a = new Array(50).fill(null).map((_, i) => i + 1);
 
   a.map(async () => {
     // const verifierAddress = await ethers.deployContract("Verifier");
@@ -23,7 +23,7 @@ async function main() {
       "VerifierRegistry",
       verifierRegisAddres
     );
-    console.log(verifierAddress)
+    // console.log(verifierAddress)
 
     const tx = await verifierRegistryContract.registerContract(
       verifierAddress,
@@ -31,7 +31,8 @@ async function main() {
     );
     fs.appendFileSync("./verifier.txt", `${verifierAddress?.target}\n`);
   }catch(_){
-    console.log(_)
+    // console.log("error in ",_)
+    console.log("error in ver")
   }
   });
   a.map(async () => {
@@ -49,7 +50,8 @@ async function main() {
     );
     fs.appendFileSync("./trustanchor.txt", `${trustanchorAddress?.target}\n`);
   }catch(e){
-    console.log(e)
+    console.log("error in ta")
+    // console.log("ta error",e)
   }
   });
 }

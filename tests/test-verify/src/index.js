@@ -48,6 +48,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import crypto from "crypto";
 // import { ethers } from "hardhat";
 var axios_1 = require("axios");
+// import data from '../data.json'
+var fs = require("fs");
 // const prisma = new PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function () {
@@ -76,9 +78,13 @@ function main() {
                     u = _b.sent();
                     endTime = new Date();
                     stop_1 = new Date().getTime() - startTime.getTime();
+                    // console.log("stop", stop);
+                    fs.appendFileSync("./".concat(concurrency, "_result_ganache_1.txt"), "[".concat(concurrency, ", ").concat(halfTime.getTime() - startTime.getTime(), ", ").concat(endTime.getTime() - halfTime.getTime(), ", ").concat(stop_1, ", 1]\n"));
                     return [3 /*break*/, 5];
                 case 4:
                     error_1 = _b.sent();
+                    // console.log(error);
+                    fs.appendFileSync("./".concat(concurrency, "_result_ganache_1.txt"), "[".concat(concurrency, ", ").concat(0, ", 0, 0, 0]\n"));
                     return [3 /*break*/, 5];
                 case 5: return [2 /*return*/];
             }
